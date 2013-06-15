@@ -4,7 +4,6 @@
  */
  
 #include "MainFrame.h"
-#include "ctb-0.16/ctb.h"
 
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
     EVT_MENU(ID_NEWSETTINGS, BaseFrame::NewSettingsWindow)
@@ -66,16 +65,7 @@ void MainFrame::CreateGUIControls() {
 void MainFrame::Update() {
     CreateMenu();
     
-    std::vector<std::string> ports;
-    ctb::GetAvailablePorts( ports );
-    
-    wxString str = wxString();
-    
-    for(unsigned int i = 0; i < ports.size(); i++) {
-        str = str + wxString(ports[i++]);
-    }
-    
-    logPanel->SetPage(str);
+    logPanel->SetPage(wxString("Hello, World!"));
 }
 
 /**

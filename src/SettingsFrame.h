@@ -30,6 +30,7 @@
 #include <wx/html/htmlwin.h>
 
 #include "BaseFrame.h"
+#include <ctb-0.16/ctb.h>
 #include "database.h"
 
 class SettingsFrame : public wxFrame

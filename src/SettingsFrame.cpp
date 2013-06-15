@@ -39,6 +39,16 @@ void SettingsFrame::CreateGUIControls() {
     SetTitle(wxT("Settings"));
     SetIcon(wxNullIcon);
     
+    // Get port list
+    std::vector<std::string> portsStrVec;
+    ctb::GetAvailablePorts( portsStrVec );
+    
+    wxString ports[64];
+    
+    for(unsigned int i = 0; i < portsStrVec.size(); i++) {
+        ports[i] = portsStrVec[i];
+    }
+    
     // Create main panel and configure sizer
     mainPanel = new wxPanel(this, wxID_ANY);
     mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -51,6 +61,8 @@ void SettingsFrame::CreateGUIControls() {
     dbUser = new wxTextCtrl(mainPanel,-1,DB_USER);
     dbPass = new wxTextCtrl(mainPanel,-1,DB_PASS);
     
+    wxChoice* comm_port = new wxChoice(mainPanel, -1, wxDefaultPosition, wxDefaultSize, portsStrVec.size(), ports);
+    
     // Create static text labels
     wxStaticText* db_host_label = 
         new wxStaticText(mainPanel,-1,wxT("Database Hostname"));
@@ -60,6 +72,8 @@ void SettingsFrame::CreateGUIControls() {
         new wxStaticText(mainPanel,-1,wxT("Database Username"));
     wxStaticText* db_pass_label = 
         new wxStaticText(mainPanel,-1,wxT("Database Password"));
+    wxStaticText* comm_port_label = 
+        new wxStaticText(mainPanel,-1,wxT("Serial Port"));
     
     // Create the buttons
     wxButton* ok_button = 
@@ -76,6 +90,8 @@ void SettingsFrame::CreateGUIControls() {
     mainSizer->Add(dbUser, 0);
     mainSizer->Add(db_pass_label, 0);
     mainSizer->Add(dbPass, 0);
+    mainSizer->Add(comm_port_label, 0);
+    mainSizer->Add(comm_port, 0);
     mainSizer->Add(buttonSizer, 0);
     buttonSizer->Add(ok_button, 0);
     buttonSizer->Add(cancel_button, 0);
