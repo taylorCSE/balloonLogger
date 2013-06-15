@@ -22,7 +22,7 @@ string DB_HOST = "127.0.0.1";
 string DB_NAME = "balloontrack";
 
 /// Database status
-string DB_STATUS;
+string DB_STATUS = "Not initialized";
 
 /// Small buffer to use in various calls
 char DB_buf[16384];
