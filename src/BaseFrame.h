@@ -34,9 +34,6 @@ class StatusFrame;
 class SettingsFrame;
 class AboutFrame;
 
-extern wxFrame* NewGraphFrame();
-extern wxFrame* NewSingleGraphFrame();
-extern wxFrame* NewStatusFrame();
 extern wxFrame* NewSettingsFrame();
 extern wxFrame* NewAboutFrame();
 
