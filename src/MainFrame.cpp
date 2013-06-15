@@ -8,9 +8,9 @@
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
     EVT_MENU(ID_NEWSETTINGS, BaseFrame::NewSettingsWindow)
     EVT_MENU(ID_ABOUT, BaseFrame::NewAboutWindow)
-    EVT_TIMER(UPDATE_TIMER, BaseFrame::OnTimer)
+    EVT_TIMER(UPDATE_TIMER, MainFrame::OnTimer)
     EVT_MENU(-1, BaseFrame::OnMenu)
-    EVT_CLOSE(BaseFrame::OnClose)
+    EVT_CLOSE(MainFrame::OnClose)
 END_EVENT_TABLE()
 
 /**
@@ -23,6 +23,9 @@ MainFrame::MainFrame()
           wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX) {
     CreateGUIControls();
     
+    updateTimer = new wxTimer(this, UPDATE_TIMER);
+    updateTimer->Start(1000);
+
     SetTransparent(245);
 }
 
@@ -51,6 +54,8 @@ void MainFrame::CreateGUIControls() {
     mainSizer->Add(logPanel, 1, wxEXPAND | wxALL);
     
     // Update and arrange
+    CreateMenu();
+    
     Update();
 }
 
@@ -63,9 +68,9 @@ void MainFrame::CreateGUIControls() {
 */
 
 void MainFrame::Update() {
-    CreateMenu();
-    
     logPanel->SetPage(wxString("Hello, World!"));
+    SetStatusText(wxString(DB_STATUS), 0);
+    SetStatusText(wxString("Version:")+wxString(VERSION), 1);
 }
 
 /**
@@ -94,12 +99,18 @@ void MainFrame::CreateMenu() {
     if(old_menubar) delete old_menubar;
 
     CreateStatusBar(2);
-    SetStatusText(wxString(COMM_PORT), 0);
-    SetStatusText(wxString("Version:")+wxString(VERSION), 1);
 }
 
-void MainFrame::OnClose(wxCommandEvent& event) {
+void MainFrame::OnClose(wxCloseEvent& event) {
     Destroy();
+}
+
+/**
+    Handles timer firing
+*/
+
+void MainFrame::OnTimer(wxTimerEvent& event) {
+    Update();
 }
 
 /**

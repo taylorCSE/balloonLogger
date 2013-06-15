@@ -49,8 +49,11 @@ class MainFrame : public wxFrame
         void Update();
         void OnOk( wxCommandEvent& event );
         void OnCancel( wxCommandEvent& event );
-        void OnClose( wxCommandEvent& event );
+        void OnClose( wxCloseEvent& event );
+        void OnTimer(wxTimerEvent& event);
         
+        wxTimer *updateTimer;
+    
         // wxWidgets gui objects
         wxPanel *mainPanel; 
         wxHtmlWindow *logPanel;
