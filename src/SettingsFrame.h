@@ -32,7 +32,7 @@
 #include "BaseFrame.h"
 #include "database.h"
 
-class SettingsFrame : public BaseFrame
+class SettingsFrame : public wxFrame
 {
     public:
         SettingsFrame();

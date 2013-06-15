@@ -6,6 +6,11 @@
 #include "MainFrame.h"
 
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
+    EVT_MENU(ID_NEWSETTINGS, BaseFrame::NewSettingsWindow)
+    EVT_MENU(ID_ABOUT, BaseFrame::NewAboutWindow)
+    EVT_TIMER(UPDATE_TIMER, BaseFrame::OnTimer)
+    EVT_MENU(-1, BaseFrame::OnMenu)
+    EVT_CLOSE(BaseFrame::OnClose)
 END_EVENT_TABLE()
 
 /**
@@ -61,6 +66,40 @@ void MainFrame::Update() {
     CreateMenu();
     
     logPanel->SetPage(wxString("Real time logging goes here"));
+}
+
+/**
+    Creates the default menus
+    
+    Options can be provided to disable specific menus.
+*/
+
+void MainFrame::CreateMenu() {
+    wxMenuBar* old_menubar = menubar;
+    
+    menubar = new wxMenuBar;
+
+    window_menu = new wxMenu;
+    menubar->Append(window_menu, wxT("&Options"));
+    
+    window_menu->Append(ID_NEWSETTINGS, wxT("Connection Settings..."));
+
+    help_menu = new wxMenu;
+    menubar->Append(help_menu, wxT("&Help"));
+        
+    help_menu->Append(ID_ABOUT, "About");
+    
+    SetMenuBar(menubar);
+
+    if(old_menubar) delete old_menubar;
+
+    CreateStatusBar(2);
+    SetStatusText(wxString(DB_STATUS), 0);
+    SetStatusText(wxString("Version:")+wxString(VERSION), 1);
+}
+
+void MainFrame::OnClose(wxCommandEvent& event) {
+    Destroy();
 }
 
 /**

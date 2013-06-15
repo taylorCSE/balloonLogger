@@ -29,21 +29,27 @@
 #include <wx/dcbuffer.h>
 #include <wx/html/htmlwin.h>
 
+#include "database.h"
+#include "version.h"
+#include "SettingsFrame.h"
+#include "AboutFrame.h"
+
 class MainFrame : public wxFrame
 {
     public:
         MainFrame();
         virtual ~MainFrame();
+        void CreateMenu();
+    
+        wxMenuBar *menubar;
 
     private:
-        // Event handlers
-        DECLARE_EVENT_TABLE();
-
         // Functions
         void CreateGUIControls();
         void Update();
         void OnOk( wxCommandEvent& event );
         void OnCancel( wxCommandEvent& event );
+        void OnClose( wxCommandEvent& event );
         
         // wxWidgets gui objects
         wxPanel *mainPanel; 
@@ -54,12 +60,19 @@ class MainFrame : public wxFrame
         wxTextCtrl* dbName;
         wxTextCtrl* dbUser;
         wxTextCtrl* dbPass;
-        
-    private:
+    
+        wxMenu *window_menu;
+        wxMenu *help_menu;
+
         // IDs fro various GUI elements
+        DECLARE_EVENT_TABLE();
+        /// IDs for various controls
         enum {
             ID_OK = 2000,
             ID_CANCEL,
+            ID_NEWSETTINGS,
+            ID_ABOUT,
+            UPDATE_TIMER,
         };
 };
 

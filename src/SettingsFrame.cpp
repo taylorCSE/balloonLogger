@@ -5,7 +5,7 @@
  
 #include "SettingsFrame.h"
 
-BEGIN_EVENT_TABLE(SettingsFrame,BaseFrame)
+BEGIN_EVENT_TABLE(SettingsFrame,wxFrame)
     EVT_BUTTON(ID_OK,  SettingsFrame::OnOk)
     EVT_BUTTON(ID_CANCEL,  SettingsFrame::OnCancel)
 END_EVENT_TABLE()
@@ -15,7 +15,7 @@ END_EVENT_TABLE()
 */
 
 SettingsFrame::SettingsFrame()
-: BaseFrame() {
+: wxFrame() {
     CreateGUIControls();
     
     SetTransparent(245);
@@ -110,8 +110,7 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
     DB_connect();
     */
     // Close the window
-    wxCloseEvent close_event;
-    OnClose(close_event);
+    Destroy();
 }
 
 /**
@@ -119,8 +118,7 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
 */
 
 void SettingsFrame::OnCancel( wxCommandEvent& event ) {
-    wxCloseEvent close_event;
-    OnClose(close_event);
+    Destroy();
 }
 
 /**
