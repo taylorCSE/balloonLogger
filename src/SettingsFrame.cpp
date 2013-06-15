@@ -15,7 +15,9 @@ END_EVENT_TABLE()
 */
 
 SettingsFrame::SettingsFrame()
-: wxFrame() {
+: wxFrame(NULL,-1, wxT(""), wxDefaultPosition, wxSize(360,300), 
+          wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | 
+          wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX) {
     CreateGUIControls();
     
     SetTransparent(245);
