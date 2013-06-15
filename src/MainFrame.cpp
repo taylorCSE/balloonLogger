@@ -94,7 +94,7 @@ void MainFrame::CreateMenu() {
     if(old_menubar) delete old_menubar;
 
     CreateStatusBar(2);
-    SetStatusText(wxString(DB_STATUS), 0);
+    SetStatusText(wxString(COMM_PORT), 0);
     SetStatusText(wxString("Version:")+wxString(VERSION), 1);
 }
 
