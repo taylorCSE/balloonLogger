@@ -118,7 +118,7 @@ void SettingsFrame::Update() {
 
 void SettingsFrame::OnOk( wxCommandEvent& event ) {
     // Set global database information based on the field values
-    /*
+    
     DB_HOST = dbHost->GetValue();
     DB_NAME = dbName->GetValue();
     DB_USER = dbUser->GetValue();
@@ -126,7 +126,7 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
 
     // Reconnect to the database
     DB_connect();
-    */
+    
     // Close the window
     Destroy();
 }
