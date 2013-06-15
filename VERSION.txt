@@ -1,2 +1,2 @@
-BalloonGraph 1.0.74
-Based on commit 56457e14e544d9411e6c2637f044a9ac7d946bf6
+BalloonGraph 1.0.80
+Based on commit 84b4ca79db76b336f7d173c17ed1cb49f0acf7fb

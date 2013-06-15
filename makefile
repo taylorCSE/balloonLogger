@@ -60,7 +60,8 @@ LIBS	  = --subsystem,windows \
 			-lwinspool \
 			-lctl3d32 \
 			-lwsock32 \
-			-llibmysql
+			-llibmysql \
+			-lctb
 
 # Compile Flags			
 CXXFLAGS  = -fno-exceptions \
