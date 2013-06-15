@@ -1,0 +1,1 @@
+This logs serial port data to a MySQL database
