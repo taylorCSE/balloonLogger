@@ -41,7 +41,7 @@ void SettingsFrame::CreateGUIControls() {
     
     // Get port list
     std::vector<std::string> portsStrVec;
-    ctb::GetAvailablePorts( portsStrVec );
+    COMM_GetAvailablePorts(portsStrVec);
     
     wxString ports[64];
     
