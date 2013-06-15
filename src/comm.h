@@ -1,5 +1,5 @@
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef COMM_H
+#define COMM_H
 
 #include <stdio.h>
 #include <vector>
