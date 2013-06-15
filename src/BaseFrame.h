@@ -26,6 +26,7 @@
 #include <string>
 
 #include "version.h"
+#include "database.h"
 
 class GraphFrame;
 class SingleGraphFrame;
