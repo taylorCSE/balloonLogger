@@ -40,13 +40,12 @@ void SettingsFrame::CreateGUIControls() {
     SetIcon(wxNullIcon);
     
     // Get port list
-    std::vector<std::string> portsStrVec;
-    COMM_GetAvailablePorts(portsStrVec);
+    COMM_GetAvailablePorts(availablePorts);
     
     wxString ports[64];
     
-    for(unsigned int i = 0; i < portsStrVec.size(); i++) {
-        ports[i] = portsStrVec[i];
+    for(unsigned int i = 0; i < availablePorts.size(); i++) {
+        ports[i] = availablePorts[i];
     }
     
     // Create main panel and configure sizer
@@ -61,7 +60,7 @@ void SettingsFrame::CreateGUIControls() {
     dbUser = new wxTextCtrl(mainPanel,-1,DB_USER);
     dbPass = new wxTextCtrl(mainPanel,-1,DB_PASS);
     
-    wxChoice* comm_port = new wxChoice(mainPanel, -1, wxDefaultPosition, wxDefaultSize, portsStrVec.size(), ports);
+    commPort = new wxChoice(mainPanel, -1, wxDefaultPosition, wxDefaultSize, availablePorts.size(), ports);
     
     // Create static text labels
     wxStaticText* db_host_label = 
@@ -91,7 +90,7 @@ void SettingsFrame::CreateGUIControls() {
     mainSizer->Add(db_pass_label, 0);
     mainSizer->Add(dbPass, 0);
     mainSizer->Add(comm_port_label, 0);
-    mainSizer->Add(comm_port, 0);
+    mainSizer->Add(commPort, 0);
     mainSizer->Add(buttonSizer, 0);
     buttonSizer->Add(ok_button, 0);
     buttonSizer->Add(cancel_button, 0);
@@ -117,12 +116,14 @@ void SettingsFrame::Update() {
 */
 
 void SettingsFrame::OnOk( wxCommandEvent& event ) {
-    // Set global database information based on the field values
+    // Set global information based on the field values
     
     DB_HOST = dbHost->GetValue();
     DB_NAME = dbName->GetValue();
     DB_USER = dbUser->GetValue();
     DB_PASS = dbPass->GetValue();
+    
+    COMM_PORT = availablePorts[commPort->GetCurrentSelection()];
 
     // Reconnect to the database
     DB_connect();

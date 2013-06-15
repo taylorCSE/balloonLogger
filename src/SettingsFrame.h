@@ -49,6 +49,8 @@ class SettingsFrame : public wxFrame
         void OnOk( wxCommandEvent& event );
         void OnCancel( wxCommandEvent& event );
         
+        std::vector<std::string> availablePorts;
+    
         // wxWidgets gui objects
         wxPanel *mainPanel; 
         wxBoxSizer *mainSizer;
@@ -57,6 +59,7 @@ class SettingsFrame : public wxFrame
         wxTextCtrl* dbName;
         wxTextCtrl* dbUser;
         wxTextCtrl* dbPass;
+        wxChoice* commPort;
         
     private:
         // IDs fro various GUI elements
