@@ -71,6 +71,7 @@ void MainFrame::Update() {
     logPanel->SetPage(wxString("Hello, World!"));
     SetStatusText(wxString(DB_STATUS), 0);
     SetStatusText(wxString("Version:")+wxString(VERSION), 1);
+    SetStatusText(wxString(COMM_PORT), 2);
 }
 
 /**
@@ -98,7 +99,7 @@ void MainFrame::CreateMenu() {
 
     if(old_menubar) delete old_menubar;
 
-    CreateStatusBar(2);
+    CreateStatusBar(3);
 }
 
 void MainFrame::OnClose(wxCloseEvent& event) {
