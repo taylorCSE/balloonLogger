@@ -29,9 +29,7 @@
 #include <wx/dcbuffer.h>
 #include <wx/html/htmlwin.h>
 
-#include "BaseFrame.h"
-
-class MainFrame : public BaseFrame
+class MainFrame : public wxFrame
 {
     public:
         MainFrame();
@@ -49,6 +47,7 @@ class MainFrame : public BaseFrame
         
         // wxWidgets gui objects
         wxPanel *mainPanel; 
+        wxHtmlWindow *logPanel;
         wxBoxSizer *mainSizer;
         
         wxTextCtrl* dbHost;
