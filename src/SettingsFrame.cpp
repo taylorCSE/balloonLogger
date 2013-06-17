@@ -139,15 +139,3 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
 void SettingsFrame::OnCancel( wxCommandEvent& event ) {
     Destroy();
 }
-
-/**
-    Create a new Settings frame.
-    
-    This allows BaseFrame to create a new SettingsFrame without knowing
-    all the details of the class.
-*/
-
-wxFrame* NewSettingsFrame() {
-    return (wxFrame*)(new SettingsFrame());
-}
-

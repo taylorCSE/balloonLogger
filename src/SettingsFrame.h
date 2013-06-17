@@ -29,9 +29,9 @@
 #include <wx/dcbuffer.h>
 #include <wx/html/htmlwin.h>
 
-#include "BaseFrame.h"
-#include "comm.h"
 #include "database.h"
+#include "version.h"
+#include "comm.h"
 
 class SettingsFrame : public wxFrame
 {
@@ -68,5 +68,4 @@ class SettingsFrame : public wxFrame
             ID_CANCEL,
         };
 };
-
 #endif

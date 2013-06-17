@@ -6,10 +6,10 @@
 #include "MainFrame.h"
 
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
-    EVT_MENU(ID_NEWSETTINGS, BaseFrame::NewSettingsWindow)
-    EVT_MENU(ID_ABOUT, BaseFrame::NewAboutWindow)
+    EVT_MENU(ID_NEWSETTINGS, MainFrame::NewSettingsFrame)
+    EVT_MENU(ID_ABOUT, MainFrame::NewAboutFrame)
     EVT_TIMER(UPDATE_TIMER, MainFrame::OnTimer)
-    EVT_MENU(-1, BaseFrame::OnMenu)
+    //EVT_MENU(-1, MainFrame::OnMenu)
     EVT_CLOSE(MainFrame::OnClose)
 END_EVENT_TABLE()
 
@@ -114,14 +114,19 @@ void MainFrame::OnTimer(wxTimerEvent& event) {
     Update();
 }
 
-/**
-    Create a new Main frame.
-    
-    This allows BaseFrame to create a new MainFrame without knowing
-    all the details of the class.
-*/
+void MainFrame::NewSettingsFrame( wxCommandEvent& event ) {
+    wxFrame* frame = new SettingsFrame();
+    frame->Show();     
+}
+
+void MainFrame::NewAboutFrame( wxCommandEvent& event ) {
+    wxFrame* frame = new AboutFrame();
+    frame->Show();     
+}
 
 wxFrame* NewMainFrame() {
     return (wxFrame*)(new MainFrame());
 }
+
+
 

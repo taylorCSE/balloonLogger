@@ -51,6 +51,9 @@ class MainFrame : public wxFrame
         void OnCancel( wxCommandEvent& event );
         void OnClose( wxCloseEvent& event );
         void OnTimer(wxTimerEvent& event);
+    
+        void NewSettingsFrame( wxCommandEvent& event );
+        void NewAboutFrame( wxCommandEvent& event );
         
         wxTimer *updateTimer;
     

@@ -29,7 +29,7 @@
 #include <wx/dcbuffer.h>
 #include <wx/html/htmlwin.h>
                            
-#include "BaseFrame.h"
+#include "version.h"
 
 class AboutFrame : public wxFrame
 {
