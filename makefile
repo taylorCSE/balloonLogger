@@ -118,8 +118,9 @@ all-before:
 
 dist: dist-custom
 	@echo -e "$(G)Building distribution $(DIST)/balloongraph-$(MAJOR).$(MINOR).$(BUILD).zip$(W)..."
-	$(ZIP) $(DIST)/balloongraph-$(MAJOR).$(MINOR).$(BUILD).zip \
+	$(ZIP) $(DIST)/balloonlogger-$(MAJOR).$(MINOR).$(BUILD).zip \
 			$(BIN) \
+			ctb-0.16.dll \
 			libmysql.dll \
 			README.txt \
 			CHANGELOG.txt \
