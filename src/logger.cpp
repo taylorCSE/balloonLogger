@@ -27,5 +27,18 @@ struct gps_payload {
     char gps[36];
 };
 
+const int packetLength = 46;
+char packetBuf[64];
+int packetPos;
+
+int storePacket() {
+    if (packetPos > 0) {
+        packetPos += COMM_GetData(packetBuf, packetLength - packetPos);
+    }
+    
+    return 0;
+}
+
 void LOGGER_storeAvailablePackets() {
+    while(storePacket());
 }
