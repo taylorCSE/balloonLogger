@@ -172,6 +172,7 @@ void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lo
     DB_query("INSERT INTO gps "
                 "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
-             "VALUES (%s, %d, %d)",
-             "myFlightId", deviceId, status);
+             "VALUES (%s, %d, %d, %s, %s, %s, %s)",
+             "myFlightId", deviceId, status, lat, latRef, lon, lonRef,
+                spd, hdg);
 }
