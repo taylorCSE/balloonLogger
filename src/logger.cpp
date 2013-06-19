@@ -46,25 +46,37 @@ union PacketBuf {
 
 union PacketBuf packetBuf;
 const int packetLength = 46;
-int packetPos;
+int packetPos = 0;
+int syncBytesSeen = 0;
 
 void storePacket() {
     packetPos = 0;
+    syncBytesSeen = 0;
 }
 
 int nextPacket() {
-    int readData = 0;
+    int bytesRead = 0;
     
-    if (packetPos > 0) {
-        packetPos += COMM_GetData(packetBuf.raw, packetLength - packetPos);
-        readData = 1;
+    if (packetPos == 0 && syncBytesSeen != 2) {
+        bytesRead = COMM_GetData(packetBuf.raw, 1);
+        
+        if (bytesRead == 1) {
+            if (packetBuf.raw[0] == 0xEE) {
+                syncBytesSeen += 1;
+            } else {
+                syncBytesSeen = 0;
+            }
+        }
+    } else {
+        bytesRead = COMM_GetData(packetBuf.raw, packetLength - packetPos);
+        packetPos += bytesRead;
     }
     
     if (packetPos == packetLength) {
         storePacket();
     }
     
-    return readData;
+    return bytesRead;
 }
 
 void LOGGER_storeAvailablePackets() {
