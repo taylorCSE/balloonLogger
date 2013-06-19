@@ -27,8 +27,25 @@ struct gps_payload {
     char gps[36];
 };
 
+struct gps_packet {
+    struct header header;
+    struct gps_payload payload;
+};
+
+struct data_packet {
+    struct header header;
+    struct data_payload payload;
+};
+
+union PacketBuf {
+    char raw[64];
+    struct header header;
+    struct data_packet dataPacket;
+    struct gps_packet gpsPacket;
+};
+
+union PacketBuf packetBuf;
 const int packetLength = 46;
-char packetBuf[64];
 int packetPos;
 
 void storePacket() {
@@ -39,7 +56,7 @@ int nextPacket() {
     int readData = 0;
     
     if (packetPos > 0) {
-        packetPos += COMM_GetData(packetBuf, packetLength - packetPos);
+        packetPos += COMM_GetData(packetBuf.raw, packetLength - packetPos);
         readData = 1;
     }
     
