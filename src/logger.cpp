@@ -31,14 +31,25 @@ const int packetLength = 46;
 char packetBuf[64];
 int packetPos;
 
-int storePacket() {
+void storePacket() {
+    packetPos = 0;
+}
+
+int nextPacket() {
+    int readData = 0;
+    
     if (packetPos > 0) {
         packetPos += COMM_GetData(packetBuf, packetLength - packetPos);
+        readData = 1;
     }
     
-    return 0;
+    if (packetPos == packetLength) {
+        storePacket();
+    }
+    
+    return readData;
 }
 
 void LOGGER_storeAvailablePackets() {
-    while(storePacket());
+    while(nextPacket());
 }
