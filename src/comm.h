@@ -2,6 +2,7 @@
 #define COMM_H
 
 #include <stdio.h>
+#include <stdint.h>
 #include <vector>
 #include <map>
 #include <string>
