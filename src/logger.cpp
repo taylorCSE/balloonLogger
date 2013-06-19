@@ -53,18 +53,30 @@ void storePacket() {
     packetPos = 0;
     syncBytesSeen = 0;
     
-    char *lat, *latRef, *lon, *lonRef, *spd, *hdg;
-    
     if (packetBuf.header.cmd == 0x1A) {
+        char* sections[6];
+        int currentSection = 1;
+        
+        sections[0] = packetBuf.gpsPacket.payload.gps;
+        
+        for (char* pos = packetBuf.gpsPacket.payload.gps; pos <= packetBuf.gpsPacket.payload.gps + 36; pos++) {
+            if (*pos == ',') {
+                *pos = '\0';
+                pos++;
+                sections[currentSection] = pos;
+                currentSection++;
+            }
+        }
+        
         DB_addGpsPacket(
             packetBuf.gpsPacket.header.id,
             packetBuf.gpsPacket.payload.status,
-            lat,
-            latRef,
-            lon,
-            lonRef,
-            spd,
-            hdg
+            sections[0],
+            sections[1],
+            sections[2],
+            sections[3],
+            sections[4],
+            sections[5]
         );
     }
 }
