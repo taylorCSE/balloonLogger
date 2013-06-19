@@ -134,7 +134,7 @@ void DB_query(char* item ...) {
 */
 
 char* DB_resultAsText() {
-    if(!DB_isQueryReady()) return("");
+    if(!DB_isQueryReady()) return((char*)"");
 
     int i = 0;
     MYSQL_ROW row;
@@ -169,10 +169,10 @@ bool DB_isQueryReady() {
 }
 
 void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
-    DB_query("INSERT INTO gps "
+    DB_query((char*)"INSERT INTO gps "
                 "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
              "VALUES (%s, %d, %d, %s, %s, %s, %s)",
-             "myFlightId", deviceId, status, lat, latRef, lon, lonRef,
+             (char*)("myFlightId"), deviceId, status, lat, latRef, lon, lonRef,
                 spd, hdg);
 }
