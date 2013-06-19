@@ -2,14 +2,13 @@
 
 48 Byte packet
 
-0-1    SYNC
+0-1    SYNC (EEEE)
 2-4    Header
 5-45   Payload
 46-47  CRC-16
 
 ## Header
 
-0-1    SYNC  EEEE
 2-3    ID    0000 - FFFF
 4      CMD   1A,2A
 
