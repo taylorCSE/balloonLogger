@@ -1,8 +1,8 @@
 # Header
 
-0-1  SYNC  EEEE
-2-3  ID    0000 - FFFF
-4    CMD   1A,2A
+0-1    SYNC  EEEE
+2-3    ID    0000 - FFFF
+4      CMD   1A,2A
 
 # GPS Packet (CMD = 1A)
 
