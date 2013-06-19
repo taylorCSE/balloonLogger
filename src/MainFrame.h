@@ -29,6 +29,8 @@
 #include <wx/dcbuffer.h>
 #include <wx/html/htmlwin.h>
 
+#include "logger.h"
+#include "comm.h"
 #include "database.h"
 #include "version.h"
 #include "SettingsFrame.h"
