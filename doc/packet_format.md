@@ -1,4 +1,13 @@
-# Header
+# Overview
+
+48 Byte packet
+
+0-1    SYNC
+2-4    Header
+5-45   Payload
+46-47  CRC-16
+
+## Header
 
 0-1    SYNC  EEEE
 2-3    ID    0000 - FFFF
@@ -14,7 +23,9 @@
 
 ## Data Packet (CMD = 2A)
 
-5-9    Digital Payload
+5      Digital Payload
+6-7    Altitude
+8-9    Rate
 10-45  Analog Payload 1 - 18
 8-9    Rate
 10-45  LAT,LAT REF,LON,LON REF,SPD,HDG
