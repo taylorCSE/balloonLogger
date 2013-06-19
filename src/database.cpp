@@ -167,3 +167,11 @@ bool DB_isQueryReady() {
     if(!DB_result) return false;
     return true;
 }
+
+void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
+    DB_query("INSERT INTO gps "
+                "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
+                "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
+             "VALUES (%s, %d, %d)",
+             "myFlightId", deviceId, status);
+}

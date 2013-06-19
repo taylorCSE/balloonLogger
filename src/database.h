@@ -25,5 +25,7 @@ void DB_connect();
 void DB_query(char * item ...);
 char* DB_resultAsText();
 bool DB_isQueryReady();
+void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef,
+    char* lon, char* lonRef, char* spd, char* hdg);
 
 #endif

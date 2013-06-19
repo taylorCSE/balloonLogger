@@ -52,6 +52,21 @@ int syncBytesSeen = 0;
 void storePacket() {
     packetPos = 0;
     syncBytesSeen = 0;
+    
+    char *lat, *latRef, *lon, *lonRef, *spd, *hdg;
+    
+    if (packetBuf.header.cmd == 0x1A) {
+        DB_addGpsPacket(
+            packetBuf.gpsPacket.header.id,
+            packetBuf.gpsPacket.payload.status,
+            lat,
+            latRef,
+            lon,
+            lonRef,
+            spd,
+            hdg
+        );
+    }
 }
 
 int nextPacket() {
