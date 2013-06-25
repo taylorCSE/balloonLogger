@@ -79,12 +79,26 @@ void storeGpsPacket() {
     );
 }
 
+void storeDataPacket() {    
+    DB_addDataPacket(
+        packetBuf.dataPacket.header.id,
+        packetBuf.dataPacket.payload.digital,
+        packetBuf.dataPacket.payload.altitude,
+        packetBuf.dataPacket.payload.rate,
+        packetBuf.dataPacket.payload.analog
+    );
+}
+
 void storePacket() {
     packetPos = 0;
     syncBytesSeen = 0;
     
-    if (packetBuf.header.cmd == DATA_PACKET) {
+    if (packetBuf.header.cmd == GPS_PACKET) {
         storeGpsPacket();
+    }
+    
+    if (packetBuf.header.cmd == DATA_PACKET) {
+        storeDataPacket();
     }
 }
 

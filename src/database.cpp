@@ -176,3 +176,7 @@ void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lo
              (char*)("myFlightId"), deviceId, status, lat, latRef, lon, lonRef,
                 spd, hdg);
 }
+
+void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
+    
+}

@@ -27,5 +27,6 @@ char* DB_resultAsText();
 bool DB_isQueryReady();
 void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef,
     char* lon, char* lonRef, char* spd, char* hdg);
+void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t analog[18]);
 
 #endif
