@@ -7,6 +7,9 @@
 
 using namespace std;
 
+const int SYNC_BYTE = 0xEE;
+const int DATA_PACKET = 0x2A;
+const int GPS_PACKET = 0x1A;
 
 struct header {
     uint16_t id;
@@ -80,7 +83,7 @@ void storePacket() {
     packetPos = 0;
     syncBytesSeen = 0;
     
-    if (packetBuf.header.cmd == 0x1A) {
+    if (packetBuf.header.cmd == DATA_PACKET) {
         storeGpsPacket();
     }
 }
@@ -92,7 +95,7 @@ int nextPacket() {
         bytesRead = COMM_GetData(packetBuf.raw, 1);
         
         if (bytesRead == 1) {
-            if (packetBuf.raw[0] == 0xEE) {
+            if (packetBuf.raw[0] == SYNC_BYTE) {
                 syncBytesSeen += 1;
             } else {
                 syncBytesSeen = 0;
