@@ -7,9 +7,9 @@
 
 using namespace std;
 
-const int SYNC_BYTE = 0xEE;
-const int DATA_PACKET = 0x2A;
-const int GPS_PACKET = 0x1A;
+const char SYNC_BYTE = 0xEE;
+const char DATA_PACKET = 0x2A;
+const char GPS_PACKET = 0x1A;
 
 struct header {
     uint16_t id;
@@ -105,6 +105,14 @@ void storePacket() {
     }
 }
 
+void write(char* msg) {
+    FILE *fp;
+
+    fp = fopen("log.txt","a");
+    fprintf(fp,"%s\n",msg);
+    fclose(fp);     
+}
+
 int nextPacket() {
     int bytesRead = 0;
     
@@ -121,7 +129,7 @@ int nextPacket() {
             }
         }
     } else {
-        bytesRead = COMM_GetData(packetBuf.raw, packetLength - packetPos);
+        bytesRead = COMM_GetData(packetBuf.raw + packetPos, packetLength - packetPos);
 
         if(bytesRead < 0) return 0;
 
@@ -140,5 +148,16 @@ int nextPacket() {
 int LOGGER_storeAvailablePackets() {
     while(nextPacket());
     return totalBytesRead;
-    
+}
+
+int LOGGER_lastPacketType() {
+    return lastPacket.header.cmd;
+}
+
+int LOGGER_lastPacketId() {
+    return lastPacket.header.cmd;
+}
+
+char* LOGGER_getLastPacket() {
+    return lastPacket.raw;
 }

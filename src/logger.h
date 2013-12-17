@@ -11,5 +11,8 @@
 #include "comm.h"
 
 int LOGGER_storeAvailablePackets();
+char* LOGGER_getLastPacket();
+int LOGGER_lastPacketType();
+int LOGGER_lastPacketId();
 
 #endif
