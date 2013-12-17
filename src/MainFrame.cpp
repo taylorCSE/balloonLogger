@@ -77,7 +77,7 @@ void MainFrame::Update() {
     int last_id = LOGGER_lastPacketId();
     
     logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),bytes_read) + "<br>" + 
-        "Last packet Type: " + wxString::Format(wxT("%x"),last_id) + "<br>"
+        "Last packet type: " + wxString::Format(wxT("%x"),last_id) + "<br>"
     );
 }
 
