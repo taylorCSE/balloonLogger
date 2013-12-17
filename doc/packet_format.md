@@ -17,7 +17,7 @@
     5      Status
     6-7    Altitude
     8-9    Rate
-    10-45  LAT,LAT REF,LON,LON REF,SPD,HDG
+    10-45  LAT,LAT REF,LON,LON REF,SPD,HDG (26 bytes)
     46-47  CRC16
 
 ## Data Payload (CMD = 2A)
