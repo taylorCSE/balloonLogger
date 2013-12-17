@@ -72,6 +72,9 @@ void MainFrame::Update() {
     SetStatusText(wxString(DB_STATUS), 0);
     SetStatusText(wxString("Version:")+wxString(VERSION), 1);
     SetStatusText(wxString(COMM_PORT), 2);
+    int bytes_read = LOGGER_storeAvailablePackets();
+    
+    logPanel->SetPage(wxString::Format(wxT("%i"),bytes_read));
 }
 
 /**

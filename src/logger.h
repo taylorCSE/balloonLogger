@@ -10,6 +10,6 @@
 #include "database.h"
 #include "comm.h"
 
-void LOGGER_storeAvailablePackets();
+int LOGGER_storeAvailablePackets();
 
 #endif

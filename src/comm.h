@@ -13,6 +13,7 @@ extern std::string COMM_PROTO;
 extern std::string COMM_AVAILABLE_PORTS[];
 
 void COMM_GetAvailablePorts(std::vector<std::string>& portsStrVec);
+void COMM_open();
 int COMM_GetData(char * buf, int len);
 
 #endif

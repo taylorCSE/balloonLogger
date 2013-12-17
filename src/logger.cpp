@@ -47,10 +47,12 @@ union PacketBuf {
     struct gps_packet gpsPacket;
 };
 
+union PacketBuf lastPacket;
 union PacketBuf packetBuf;
 const int packetLength = 46;
 int packetPos = 0;
 int syncBytesSeen = 0;
+int totalBytesRead = 0;
 
 void storeGpsPacket() {
     char* sections[6];
@@ -92,6 +94,7 @@ void storeDataPacket() {
 void storePacket() {
     packetPos = 0;
     syncBytesSeen = 0;
+    lastPacket = packetBuf;
     
     if (packetBuf.header.cmd == GPS_PACKET) {
         storeGpsPacket();
@@ -108,6 +111,8 @@ int nextPacket() {
     if (packetPos == 0 && syncBytesSeen != 2) {
         bytesRead = COMM_GetData(packetBuf.raw, 1);
         
+        if(bytesRead < 0) return 0;
+        
         if (bytesRead == 1) {
             if (packetBuf.raw[0] == SYNC_BYTE) {
                 syncBytesSeen += 1;
@@ -117,6 +122,9 @@ int nextPacket() {
         }
     } else {
         bytesRead = COMM_GetData(packetBuf.raw, packetLength - packetPos);
+
+        if(bytesRead < 0) return 0;
+
         packetPos += bytesRead;
     }
     
@@ -124,9 +132,13 @@ int nextPacket() {
         storePacket();
     }
     
+    totalBytesRead += bytesRead;
+    
     return bytesRead;
 }
 
-void LOGGER_storeAvailablePackets() {
+int LOGGER_storeAvailablePackets() {
     while(nextPacket());
+    return totalBytesRead;
+    
 }
