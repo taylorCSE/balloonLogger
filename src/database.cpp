@@ -178,5 +178,12 @@ void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lo
 }
 
 void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
-    
+    /*
+    DB_query((char*)"INSERT INTO aip "
+                "(FlightId, DeviceId, PacketId, Timestamp, DI, Altitude, Rate," 
+                "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)"
+             "VALUES (%s, %d, %d, %s, %s, %s, %s, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
+             (char*)("myFlightId"), deviceId, DI, altitude, rate,
+                
+                spd, hdg);*/
 }
