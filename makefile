@@ -11,7 +11,8 @@ RM		= rm -f
 ZIP	   = zip
 
 # Output filenames
-BIN	   = BalloonLogger.exe
+BIN = BalloonLogger.exe
+BIN_CLI = BalloonLoggerCLI.exe
 
 # Metadata
 COMMIT = `git rev-parse HEAD`
@@ -23,6 +24,7 @@ BUILD_INCREMENT = `cat $(SRC_DIR)/version.h | awk '/BUILD/{ printf("%d",$$3+1); 
 # Source files and objects
 SRC_DIRS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(subst $(SRC_DIR),$(BUILD_DIR),$(patsubst %.cpp,%.o,$(SRC_DIRS)))
+OBJ_CLI = $(BUILD_DIR)/BalloonLoggerCLI.o $(BUILD_DIR)/comm.o $(BUILD_DIR)/logger.o $(BUILD_DIR)/database.o
 
 # Libraries to include
 LIBS	  = --subsystem,windows \
@@ -86,7 +88,7 @@ R=\x1b[31;01m
 Y=\x1b[33;01m
 
 .PHONY: all all-before all-after clean clean-custom dist dist-custom todo todo-custom
-all: all-before src/version.h $(BIN) all-after
+all: all-before src/version.h $(BIN) $(BIN_CLI) all-after
 
 clean: clean-custom
 	@echo -e "$(G)Removing temporary files$(W)..."
@@ -139,8 +141,23 @@ $(BIN): $(OBJ) $(BUILD_DIR)/icon.o
 	@if test -s temp.log; then echo -e "$(R)`cat temp.log`$(W)"; fi;
 	@$(RM) temp.log temp2.log
 
+$(BIN_CLI): $(OBJ_CLI)
+	@echo -e "Linking $(G)$@...$(W)"
+	@$(RM) temp.log temp2.log
+	-@$(LINK) $(OBJ_CLI) -o "$(BIN_CLI)" $(LIBS) $(CXXFLAGS) 2> temp.log
+	@if test -s temp.log; then echo -e "$(R)`cat temp.log`$(W)"; fi;
+	@$(RM) temp.log temp2.log
+
 # Build Objects
 	
+$(BUILD_DIR)/BalloonLoggerCLI.o: $(SRC_DIR)/BalloonLoggerCLI.c $(SRC_DIR)/BalloonLoggerCLI.h
+	@echo -e "Compiling $(G)$<$(W) to $(Y)$@$(W)..."
+	@$(RM) temp.log temp2.log
+	-@$(CPP) -c $< -o $@ $(CXXFLAGS) 2> temp.log
+	@if test -s temp.log; then echo -e "$(R)`cat temp.log`$(W)"; fi;
+	@$(RM) temp.log temp2.log
+	
+    
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
 	@echo -e "Compiling $(G)$<$(W) to $(Y)$@$(W)..."
 	@$(RM) temp.log temp2.log
