@@ -92,7 +92,7 @@ all: all-before src/version.h $(BIN) $(BIN_CLI) all-after
 
 clean: clean-custom
 	@echo -e "$(G)Removing temporary files$(W)..."
-	-@$(RM) $(OBJ) "$(BIN)"
+	-@$(RM) $(OBJ) $(CLI_OBJ) "$(BIN)"
 	@echo -e "$(G)Done$(W)."
 
 # Update version file
