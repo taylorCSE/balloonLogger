@@ -123,9 +123,7 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
     DB_USER = dbUser->GetValue();
     DB_PASS = dbPass->GetValue();
     
-    COMM_PORT = availablePorts[commPort->GetCurrentSelection()];
-    
-    COMM_open();
+    COMM_open(availablePorts[commPort->GetCurrentSelection()]);
 
     // Reconnect to the database
     DB_connect();

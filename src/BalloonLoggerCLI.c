@@ -14,7 +14,7 @@
 int main() {
     printf("BalloonLoggerCLI %s\n", VERSION);
     
-    COMM_open();
+    COMM_open("com6");
     
     while(1) {
         int packetsRead = LOGGER_storeAvailablePackets();

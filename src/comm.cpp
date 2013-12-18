@@ -8,7 +8,7 @@
 using namespace std;
 
 /// Defualt Comm values
-string COMM_PORT = "com6";
+string COMM_PORT = "com1";
 string COMM_BAUD = "4800";
 string COMM_PROTO = "8N1";
 
@@ -18,7 +18,9 @@ void COMM_GetAvailablePorts(std::vector<std::string>& portsStrVec) {
     ctb::GetAvailablePorts(portsStrVec);
 }
 
-void COMM_open() {
+void COMM_open(string port) {
+    COMM_PORT = port;
+    
     if( serialPort ) {
         serialPort->Close();
 

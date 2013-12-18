@@ -23,7 +23,7 @@ MainFrame::MainFrame()
           wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX) {
     CreateGUIControls();
     
-    COMM_open();
+    COMM_open("com6");
 
     updateTimer = new wxTimer(this, UPDATE_TIMER);
     updateTimer->Start(100);
