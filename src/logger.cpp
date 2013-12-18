@@ -58,6 +58,8 @@ uint16_t altitude = 0;
 uint16_t rate = 0;
 uint8_t digital = 0;
 
+LOGGER_State_t LOGGER_state;
+
 void write(char* msg) {
     FILE *fp;
 
@@ -67,9 +69,9 @@ void write(char* msg) {
 }
 
 void storeGpsPacket() {
-    gpsStatus = packetBuf.gpsPacket.payload.status;
-    altitude = packetBuf.gpsPacket.payload.altitude;
-    rate = packetBuf.gpsPacket.payload.rate;
+    LOGGER_state.gpsStatus = packetBuf.gpsPacket.payload.status;
+    LOGGER_state.altitude = packetBuf.gpsPacket.payload.altitude;
+    LOGGER_state.rate = packetBuf.gpsPacket.payload.rate;
     
     /*
     char* sections[6];
@@ -100,9 +102,9 @@ void storeGpsPacket() {
 }
 
 void storeDataPacket() {
-    digital = packetBuf.dataPacket.payload.digital;
-    altitude = packetBuf.dataPacket.payload.altitude;
-    rate = packetBuf.dataPacket.payload.rate;
+    LOGGER_state.digital = packetBuf.dataPacket.payload.digital;
+    LOGGER_state.altitude = packetBuf.dataPacket.payload.altitude;
+    LOGGER_state.rate = packetBuf.dataPacket.payload.rate;
 
     /*
     char tmp[37];
@@ -184,15 +186,15 @@ int LOGGER_lastPacketId() {
 }
 
 int LOGGER_getGPSStatus() {
-    return gpsStatus;
+    return LOGGER_state.gpsStatus;
 }
 
 int LOGGER_getAltitude() {
-    return altitude;
+    return LOGGER_state.altitude;
 }
 
 int LOGGER_getRate() {
-    return rate;
+    return LOGGER_state.rate;
 }
 
 char* LOGGER_getLastPacket() {
