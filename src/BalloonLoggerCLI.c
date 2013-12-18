@@ -17,6 +17,10 @@ int main() {
     COMM_open();
     
     while(1) {
-        LOGGER_storeAvailablePackets();
+        int packetsRead = LOGGER_storeAvailablePackets();
+        
+        if (packetsRead > 0) {
+            printf("%d packets read (%d bytes)\n", LOGGER_state.packetsRead, LOGGER_state.bytesRead);
+        }
     }
 }
