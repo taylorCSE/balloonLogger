@@ -144,7 +144,7 @@ $(BIN): $(OBJ) $(BUILD_DIR)/icon.o
 $(BIN_CLI): $(OBJ_CLI)
 	@echo -e "Linking $(G)$@...$(W)"
 	@$(RM) temp.log temp2.log
-	-@$(LINK) $(OBJ_CLI) -o "$(BIN_CLI)" $(LIBS) $(CXXFLAGS) 2> temp.log
+	-@$(LINK) $(OBJ_CLI) -o "$(BIN_CLI)" -llibmysql -lctb $(CXXFLAGS) 2> temp.log
 	@if test -s temp.log; then echo -e "$(R)`cat temp.log`$(W)"; fi;
 	@$(RM) temp.log temp2.log
 
