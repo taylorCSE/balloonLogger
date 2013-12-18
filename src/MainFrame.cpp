@@ -80,9 +80,9 @@ void MainFrame::Update() {
     
     logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),bytes_read) + "<br>" + 
         "Last packet type: " + wxString::Format(wxT("%x"),last_id) + "<br>" +
-        "GPS Status: " + wxString::Format(wxT("%d"),LOGGER_getGPSStatus()) + "<br>" +
-        "Altitude: " + wxString::Format(wxT("%d"),LOGGER_getAltitude()) + "<br>" +
-        "Rate: " + wxString::Format(wxT("%d"),LOGGER_getRate()) + "<br>"
+        "GPS Status: " + wxString::Format(wxT("%d"),LOGGER_state.gpsStatus) + "<br>" +
+        "Altitude: " + wxString::Format(wxT("%d"),LOGGER_state.altitude) + "<br>" +
+        "Rate: " + wxString::Format(wxT("%d"),LOGGER_state.rate) + "<br>"
     );
 }
 

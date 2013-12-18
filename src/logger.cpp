@@ -184,19 +184,3 @@ int LOGGER_lastPacketType() {
 int LOGGER_lastPacketId() {
     return lastPacket.header.cmd;
 }
-
-int LOGGER_getGPSStatus() {
-    return LOGGER_state.gpsStatus;
-}
-
-int LOGGER_getAltitude() {
-    return LOGGER_state.altitude;
-}
-
-int LOGGER_getRate() {
-    return LOGGER_state.rate;
-}
-
-char* LOGGER_getLastPacket() {
-    return lastPacket.raw;
-}
