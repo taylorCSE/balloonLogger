@@ -103,6 +103,9 @@ void DB_query(char* item ...) {
         if(item[i] == '%' && item[i+1] == 'd') {
             sprintf(query,"%s%d",query,va_arg(v,int));
             i++;
+        } else if(item[i] == '%' && item[i+1] == 'u') {
+            sprintf(query,"%s%u",query,va_arg(v,unsigned int));
+            i++;
         } else if(item[i] == '%' && item[i+1] == 'f') {
             sprintf(query,"%s%f",query,va_arg(v,double));
             i++;
@@ -174,7 +177,7 @@ bool DB_isQueryReady() {
     return true;
 }
 
-void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
+void DB_addGpsPacket(uint16_t deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
     DB_query((char*)"INSERT INTO gps "
                 "(FlightId, DeviceId, PacketId, TimesStamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
@@ -183,11 +186,13 @@ void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lo
                 spd, hdg);
 }
 
-void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
+void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
+    fprintf(DB_log, "deviceId: %u\n",deviceId);
+
     DB_query((char*)"INSERT INTO aip "
                 "(FlightId, DeviceId, PacketId, TimesStamp, DI, Altitude, Rate," 
                 "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) "
-             "VALUES ('%s', %d, %d, FROM_UNIXTIME(%d), %d, %d, %d, "
+             "VALUES ('%s', %u, %d, FROM_UNIXTIME(%d), %d, %d, %d, "
                 "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
              (char*)("myFlightId"), deviceId, DB_PACKET_ID, time(0), DI, altitude, rate,
              analog[0],
