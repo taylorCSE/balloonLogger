@@ -76,7 +76,6 @@ void MainFrame::Update() {
     SetStatusText(wxString(COMM_PORT), 2);
     
     LOGGER_storeAvailablePackets();
-    int last_id = LOGGER_lastPacketId();
     
     logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),LOGGER_state.bytesRead) + "<br>" + 
         "Packets read: " + wxString::Format(wxT("%i"),LOGGER_state.packetsRead) + "<br>" +
