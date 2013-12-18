@@ -26,7 +26,7 @@ MainFrame::MainFrame()
     COMM_open();
 
     updateTimer = new wxTimer(this, UPDATE_TIMER);
-    updateTimer->Start(1000);
+    updateTimer->Start(100);
 
     SetTransparent(245);
 }
