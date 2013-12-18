@@ -100,19 +100,6 @@ void storeDataPacket() {
     LOGGER_state.digital = packetBuf.dataPacket.payload.digital;
     LOGGER_state.altitude = packetBuf.dataPacket.payload.altitude;
     LOGGER_state.rate = packetBuf.dataPacket.payload.rate;
-    LOGGER_state.lastId = packetBuf.dataPacket.header.id;
-    LOGGER_state.lastCmd = packetBuf.dataPacket.header.cmd;
-
-    /*
-    char tmp[37];
-    
-    write("analog values:");
-    
-    for (int i = 0; i < 18; i++) {
-        sprintf(tmp, "%d", packetBuf.dataPacket.payload.analog[i]);
-        write(tmp);
-    }
-    */
 
     DB_addDataPacket(
         packetBuf.dataPacket.header.id,
@@ -128,6 +115,9 @@ void storePacket() {
     syncBytesSeen = 0;
     lastPacket = packetBuf;
     LOGGER_state.packetsRead++;
+    
+    LOGGER_state.lastId = packetBuf.header.id;
+    LOGGER_state.lastCmd = packetBuf.header.cmd;
     
     if (packetBuf.header.cmd == GPS_PACKET) {
         storeGpsPacket();
