@@ -79,8 +79,9 @@ void MainFrame::Update() {
     int last_id = LOGGER_lastPacketId();
     
     logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),LOGGER_state.bytesRead) + "<br>" + 
+        "Packets read: " + wxString::Format(wxT("%i"),LOGGER_state.packetsRead) + "<br>" +
         "Last packet type: " + wxString::Format(wxT("%x"),LOGGER_state.lastCmd) + "<br>" +
-        "Last packet ID: " + wxString::Format(wxT("%x"),LOGGER_state.lastId) + "<br>" +
+        "Last packet ID: " + wxString::Format(wxT("%i"),LOGGER_state.lastId) + "<br>" +
         "GPS Status: " + wxString::Format(wxT("%d"),LOGGER_state.gpsStatus) + "<br>" +
         "Altitude: " + wxString::Format(wxT("%d"),LOGGER_state.altitude) + "<br>" +
         "Rate: " + wxString::Format(wxT("%d"),LOGGER_state.rate) + "<br>"
