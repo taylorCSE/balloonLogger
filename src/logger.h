@@ -14,5 +14,6 @@ int LOGGER_storeAvailablePackets();
 char* LOGGER_getLastPacket();
 int LOGGER_lastPacketType();
 int LOGGER_lastPacketId();
+int LOGGER_getGPSStatus();
 
 #endif

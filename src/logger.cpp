@@ -53,8 +53,25 @@ const int packetLength = 46;
 int packetPos = 0;
 int syncBytesSeen = 0;
 int totalBytesRead = 0;
+uint8_t gpsStatus = 0;
+uint16_t altitude = 0;
+uint16_t rate = 0;
+uint8_t digital = 0;
+
+void write(char* msg) {
+    FILE *fp;
+
+    fp = fopen("log.txt","a");
+    fprintf(fp,"%s\n",msg);
+    fclose(fp);     
+}
 
 void storeGpsPacket() {
+    gpsStatus = packetBuf.gpsPacket.payload.status;
+    altitude = packetBuf.gpsPacket.payload.altitude;
+    rate = packetBuf.gpsPacket.payload.rate;
+    
+    /*
     char* sections[6];
     int currentSection = 1;
     
@@ -79,9 +96,25 @@ void storeGpsPacket() {
         sections[4],
         sections[5]
     );
+    */
 }
 
-void storeDataPacket() {    
+void storeDataPacket() {
+    digital = packetBuf.dataPacket.payload.digital;
+    altitude = packetBuf.dataPacket.payload.altitude;
+    rate = packetBuf.dataPacket.payload.rate;
+
+    /*
+    char tmp[37];
+    
+    write("analog values:");
+    
+    for (int i = 0; i < 18; i++) {
+        sprintf(tmp, "%d", packetBuf.dataPacket.payload.analog[i]);
+        write(tmp);
+    }
+    */
+
     DB_addDataPacket(
         packetBuf.dataPacket.header.id,
         packetBuf.dataPacket.payload.digital,
@@ -103,14 +136,6 @@ void storePacket() {
     if (packetBuf.header.cmd == DATA_PACKET) {
         storeDataPacket();
     }
-}
-
-void write(char* msg) {
-    FILE *fp;
-
-    fp = fopen("log.txt","a");
-    fprintf(fp,"%s\n",msg);
-    fclose(fp);     
 }
 
 int nextPacket() {
@@ -156,6 +181,10 @@ int LOGGER_lastPacketType() {
 
 int LOGGER_lastPacketId() {
     return lastPacket.header.cmd;
+}
+
+int LOGGER_getGPSStatus() {
+    return gpsStatus;
 }
 
 char* LOGGER_getLastPacket() {
