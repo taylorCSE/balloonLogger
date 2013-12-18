@@ -11,6 +11,7 @@
 
 #include <my_global.h>                
 #include <mysql.h>
+#include <time.h>
 
 extern FILE * DB_log;
 

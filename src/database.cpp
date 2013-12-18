@@ -189,7 +189,7 @@ void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t ana
                 "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) "
              "VALUES ('%s', %d, %d, FROM_UNIXTIME(%d), %d, %d, %d, "
                 "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
-             (char*)("myFlightId"), deviceId, DB_PACKET_ID, 0, DI, altitude, rate,
+             (char*)("myFlightId"), deviceId, DB_PACKET_ID, time(0), DI, altitude, rate,
              analog[0],
              analog[1],
              analog[2],
