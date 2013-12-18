@@ -27,6 +27,8 @@ string DB_STATUS = "Not initialized";
 /// Small buffer to use in various calls
 char DB_buf[16384];
 
+int DB_PACKET_ID = 0;
+
 /**
     Connect to the database
 */
@@ -120,7 +122,11 @@ void DB_query(char* item ...) {
     
     if(!mysql_query(DB_conn, query)) {
         DB_result = mysql_store_result(DB_conn);
-        fprintf(DB_log, "Rows Returned: %d\n",(int)mysql_num_rows(DB_result));
+        if (DB_result) {
+            fprintf(DB_log, "Rows Returned: %d\n",(int)mysql_num_rows(DB_result));
+        } else {
+            fprintf(DB_log, "Query executed successfully\n");            
+        }
     } else {
         fprintf(DB_log, "Error querying database.\n");
         DB_result = 0x00;
@@ -170,7 +176,7 @@ bool DB_isQueryReady() {
 
 void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
     DB_query((char*)"INSERT INTO gps "
-                "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
+                "(FlightId, DeviceId, PacketId, TimesStamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
              "VALUES (%s, %d, %d, %s, %s, %s, %s)",
              (char*)("myFlightId"), deviceId, status, lat, latRef, lon, lonRef,
@@ -178,12 +184,31 @@ void DB_addGpsPacket(int deviceId, int status, char* lat, char* latRef, char* lo
 }
 
 void DB_addDataPacket(int deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
-    /*
     DB_query((char*)"INSERT INTO aip "
-                "(FlightId, DeviceId, PacketId, Timestamp, DI, Altitude, Rate," 
-                "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)"
-             "VALUES (%s, %d, %d, %s, %s, %s, %s, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
-             (char*)("myFlightId"), deviceId, DI, altitude, rate,
-                
-                spd, hdg);*/
+                "(FlightId, DeviceId, PacketId, TimesStamp, DI, Altitude, Rate," 
+                "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) "
+             "VALUES ('%s', %d, %d, FROM_UNIXTIME(%d), %d, %d, %d, "
+                "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
+             (char*)("myFlightId"), deviceId, DB_PACKET_ID, 0, DI, altitude, rate,
+             analog[0],
+             analog[1],
+             analog[2],
+             analog[3],
+             analog[4],
+             analog[5],
+             analog[6],
+             analog[7],
+             analog[8],
+             analog[9],
+             analog[10],
+             analog[11],
+             analog[12],
+             analog[13],
+             analog[14],
+             analog[15],
+             analog[16],
+             analog[17]
+            );
+            
+    DB_PACKET_ID++;
 }
