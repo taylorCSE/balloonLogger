@@ -42,16 +42,15 @@ void COMM_open(string port) {
  * Non-blocking method to retreive available data from configured comm port
  */
 int COMM_GetData(char * buf, int len) {
+    if (serialPort && (!serialPort->IsOpen() || serialPort->Read( buf, 0) < 0)) {
+        COMM_open(COMM_PORT);
+    }
+    
     if( !serialPort ) {
         return 0;
     }
 
     int bytesRead = serialPort->Read( buf, 
                                    len);
-    
-    if (bytesRead < 0) {
-        COMM_open(COMM_PORT);
-    }
-    
     return bytesRead;
 }
