@@ -52,7 +52,6 @@ union PacketBuf packetBuf;
 const int packetLength = 46;
 int packetPos = 0;
 int syncBytesSeen = 0;
-int totalBytesRead = 0;
 
 LOGGER_State_t LOGGER_state;
 
@@ -163,14 +162,13 @@ int nextPacket() {
         storePacket();
     }
     
-    totalBytesRead += bytesRead;
+    LOGGER_state.bytesRead += bytesRead;
     
     return bytesRead;
 }
 
-int LOGGER_storeAvailablePackets() {
+void LOGGER_storeAvailablePackets() {
     while(nextPacket());
-    return totalBytesRead;
 }
 
 int LOGGER_lastPacketType() {

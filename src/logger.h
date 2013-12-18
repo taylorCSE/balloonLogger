@@ -15,11 +15,12 @@ struct LOGGER_State_t {
     uint16_t altitude;
     uint16_t rate;
     uint8_t digital;
+    int bytesRead;
 };
 
 extern LOGGER_State_t LOGGER_state;
 
-int LOGGER_storeAvailablePackets();
+void LOGGER_storeAvailablePackets();
 char* LOGGER_getLastPacket();
 int LOGGER_lastPacketType();
 int LOGGER_lastPacketId();
