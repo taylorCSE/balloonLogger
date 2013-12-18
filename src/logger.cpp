@@ -163,11 +163,3 @@ int nextPacket() {
 void LOGGER_storeAvailablePackets() {
     while(nextPacket());
 }
-
-int LOGGER_lastPacketType() {
-    return lastPacket.header.cmd;
-}
-
-int LOGGER_lastPacketId() {
-    return lastPacket.header.cmd;
-}

@@ -25,7 +25,5 @@ extern LOGGER_State_t LOGGER_state;
 
 void LOGGER_storeAvailablePackets();
 char* LOGGER_getLastPacket();
-int LOGGER_lastPacketType();
-int LOGGER_lastPacketId();
 
 #endif
