@@ -15,6 +15,8 @@ struct LOGGER_State_t {
     uint16_t altitude;
     uint16_t rate;
     uint8_t digital;
+    uint8_t lastType;
+    uint8_t lastCmd;
     int bytesRead;
 };
 

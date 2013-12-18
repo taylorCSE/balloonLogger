@@ -100,6 +100,8 @@ void storeDataPacket() {
     LOGGER_state.digital = packetBuf.dataPacket.payload.digital;
     LOGGER_state.altitude = packetBuf.dataPacket.payload.altitude;
     LOGGER_state.rate = packetBuf.dataPacket.payload.rate;
+    LOGGER_state.lastId = packetBuf.dataPacket.header.id
+    LOGGER_state.lastCmd = packetBuf.dataPacket.header.cmd
 
     /*
     char tmp[37];
