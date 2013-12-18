@@ -15,5 +15,7 @@ char* LOGGER_getLastPacket();
 int LOGGER_lastPacketType();
 int LOGGER_lastPacketId();
 int LOGGER_getGPSStatus();
+int LOGGER_getAltitude();
+int LOGGER_getRate();
 
 #endif

@@ -187,6 +187,14 @@ int LOGGER_getGPSStatus() {
     return gpsStatus;
 }
 
+int LOGGER_getAltitude() {
+    return altitude;
+}
+
+int LOGGER_getRate() {
+    return rate;
+}
+
 char* LOGGER_getLastPacket() {
     return lastPacket.raw;
 }
