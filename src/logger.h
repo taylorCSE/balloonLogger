@@ -23,7 +23,7 @@ struct LOGGER_State_t {
 
 extern LOGGER_State_t LOGGER_state;
 
-void LOGGER_storeAvailablePackets();
+int LOGGER_storeAvailablePackets();
 char* LOGGER_getLastPacket();
 
 #endif

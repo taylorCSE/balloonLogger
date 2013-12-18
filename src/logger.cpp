@@ -160,6 +160,10 @@ int nextPacket() {
     return bytesRead;
 }
 
-void LOGGER_storeAvailablePackets() {
+int LOGGER_storeAvailablePackets() {
+    int startingPackets = LOGGER_state.packetsRead;
+    
     while(nextPacket());
+    
+    return LOGGER_state.packetsRead - startingPackets;
 }
