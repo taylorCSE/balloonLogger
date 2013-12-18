@@ -53,10 +53,6 @@ const int packetLength = 46;
 int packetPos = 0;
 int syncBytesSeen = 0;
 int totalBytesRead = 0;
-uint8_t gpsStatus = 0;
-uint16_t altitude = 0;
-uint16_t rate = 0;
-uint8_t digital = 0;
 
 LOGGER_State_t LOGGER_state;
 
