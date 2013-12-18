@@ -25,6 +25,8 @@ void COMM_open(string port) {
         serialPort->Close();
 
         delete serialPort;
+        
+        serialPort = 0;
     }
     
     serialPort = new ctb::SerialPort();
@@ -33,7 +35,6 @@ void COMM_open(string port) {
                     COMM_PROTO.c_str(), 
                     ctb::SerialPort::NoFlowControl);
 }
-
 
 /**
  * COMM_GetData
@@ -47,6 +48,10 @@ int COMM_GetData(char * buf, int len) {
 
     int bytesRead = serialPort->Read( buf, 
                                    len);
-
+    
+    if (bytesRead < 0) {
+        COMM_open(COMM_PORT);
+    }
+    
     return bytesRead;
 }
