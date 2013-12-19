@@ -47,7 +47,6 @@ union PacketBuf {
     struct gps_packet gpsPacket;
 };
 
-union PacketBuf lastPacket;
 union PacketBuf packetBuf;
 
 LOGGER_State_t LOGGER_state;
@@ -108,7 +107,6 @@ void storeDataPacket() {
 }
 
 void storePacket() {
-    lastPacket = packetBuf;
     LOGGER_state.packetsRead++;
     
     LOGGER_state.lastId = packetBuf.header.id;
