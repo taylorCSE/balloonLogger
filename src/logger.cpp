@@ -45,9 +45,7 @@ union PacketBuf {
     struct header header;
     struct data_packet dataPacket;
     struct gps_packet gpsPacket;
-};
-
-union PacketBuf packetBuf;
+} packetBuf;
 
 LOGGER_State_t LOGGER_state;
 
