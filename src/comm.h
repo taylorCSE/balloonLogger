@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <ctb-0.16/ctb.h>
+#include <time.h>
 
 extern std::string COMM_PORT;
 extern std::string COMM_BAUD;

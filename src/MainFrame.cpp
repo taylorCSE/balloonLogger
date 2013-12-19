@@ -26,8 +26,9 @@ MainFrame::MainFrame()
     COMM_open("com6");
 
     updateTimer = new wxTimer(this, UPDATE_TIMER);
-    updateTimer->Start(100);
 
+    updateTimer->Start(1000);
+              
     SetTransparent(245);
 }
 
@@ -58,7 +59,7 @@ void MainFrame::CreateGUIControls() {
     // Update and arrange
     CreateMenu();
     
-    Update();
+    Update();    
 }
 
 /**
@@ -124,7 +125,9 @@ void MainFrame::OnClose(wxCloseEvent& event) {
 */
 
 void MainFrame::OnTimer(wxTimerEvent& event) {
+    updateTimer->Stop();
     Update();
+    updateTimer->Start(1000);
 }
 
 void MainFrame::NewSettingsFrame( wxCommandEvent& event ) {

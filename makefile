@@ -27,8 +27,7 @@ OBJ = $(subst $(SRC_DIR),$(BUILD_DIR),$(patsubst %.cpp,%.o,$(SRC_DIRS)))
 OBJ_CLI = $(BUILD_DIR)/BalloonLoggerCLI.o $(BUILD_DIR)/comm.o $(BUILD_DIR)/logger.o $(BUILD_DIR)/database.o
 
 # Libraries to include
-LIBS	  = -mwindows \
-			-lwx_msw_richtext-2.8 \
+LIBS	  = -lwx_msw_richtext-2.8 \
 			-lwx_msw_aui-2.8 \
 			-lwx_msw_xrc-2.8 \
 			-lwx_msw_qa-2.8 \

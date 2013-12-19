@@ -14,6 +14,8 @@ string COMM_PROTO = "8N1";
 
 ctb::SerialPort* serialPort = 0;
 
+int wait = 0;
+
 void COMM_GetAvailablePorts(std::vector<std::string>& portsStrVec) {
     ctb::GetAvailablePorts(portsStrVec);
 }
@@ -42,15 +44,17 @@ void COMM_open(string port) {
  * Non-blocking method to retreive available data from configured comm port
  */
 int COMM_GetData(char * buf, int len) {
-    if( !serialPort ) {
+    if( !serialPort || time(0) < wait) {
         return 0;
     }
 
-    if (serialPort->Read( buf, 0) < 0) {
-        COMM_open(COMM_PORT);
-    }
-    
     int bytesRead = serialPort->Read( buf, len);
     
+    if (bytesRead < 0) {
+        printf("Attempting to reconnect...\n");
+        COMM_open(COMM_PORT);
+        wait = time(0) + 10; // Introduce a delay to work around a reconnect bug
+    }
+
     return bytesRead;
 }
