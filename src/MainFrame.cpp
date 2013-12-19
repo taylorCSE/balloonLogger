@@ -97,7 +97,7 @@ void MainFrame::CreateMenu() {
     window_menu = new wxMenu;
     menubar->Append(window_menu, wxT("&Options"));
     
-    window_menu->Append(ID_NEWSETTINGS, wxT("Connection Settings..."));
+    window_menu->Append(ID_NEWSETTINGS, wxT("Settings..."));
 
     help_menu = new wxMenu;
     menubar->Append(help_menu, wxT("&Help"));
