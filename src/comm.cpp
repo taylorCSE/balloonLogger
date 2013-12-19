@@ -14,9 +14,19 @@ string COMM_PROTO = "8N1";
 
 ctb::SerialPort* serialPort = 0;
 
+/** Fills the passed string vector with comm ports available for use */
+
 void COMM_GetAvailablePorts(std::vector<std::string>& portsStrVec) {
     ctb::GetAvailablePorts(portsStrVec);
 }
+
+/** 
+ * Opens the specified comm port 
+ *
+ * This will close any currently open port and connect to the newly specified port.
+ *
+ * \param port string specifying the port to open
+**/
 
 void COMM_open(string port) {
     COMM_PORT = port;
@@ -36,11 +46,14 @@ void COMM_open(string port) {
                     ctb::SerialPort::NoFlowControl);
 }
 
-/**
- * COMM_GetData
+/** 
+ * Non-blocking method to retreive available data from configured comm port 
  *
- * Non-blocking method to retreive available data from configured comm port
- */
+ * \param buf space to store data
+ * \param len maximum amount of data to read into buffer
+ * \return Number of bytes read on this call
+**/
+
 int COMM_GetData(char * buf, int len) {
     static int wait = 0;
 
