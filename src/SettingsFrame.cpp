@@ -129,7 +129,9 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
     DB_PASS = dbPass->GetValue();
     DB_FLIGHT_ID = dbFlight->GetValue();
     
-    COMM_open(availablePorts[commPort->GetCurrentSelection()]);
+    if (commPort->GetSelection() != wxNOT_FOUND) {
+        COMM_open(availablePorts[commPort->GetSelection()]);
+    }
 
     // Reconnect to the database
     DB_connect();
