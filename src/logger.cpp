@@ -11,49 +11,31 @@ const char SYNC_BYTE = 0xEE;
 const char DATA_PACKET = 0x2A;
 const char GPS_PACKET = 0x1A;
 
-/** Describes the packet header */
-
 struct header {
     uint16_t id;
     uint8_t cmd;
 };
 
-/** Describes the data packet payload */
-
-struct data_payload {
-    uint8_t digital;
-    uint16_t altitude;
-    uint16_t rate;
-    uint16_t analog[18];
-};
-
-/** Describes the gps packet payload */
-
-struct gps_payload {
+struct gps_packet {
+    struct header header;
     uint8_t status;
     uint16_t altitude;
     uint16_t rate;
     char gps[36];
 };
 
-/** Describes gps packets */
-
-struct gps_packet {
-    struct header header;
-    struct gps_payload payload;
-};
-
-/** Describes data packets */
-
 struct data_packet {
     struct header header;
-    struct data_payload payload;
+    uint8_t digital;
+    uint16_t altitude;
+    uint16_t rate;
+    uint16_t analog[18];
 };
 
 /**
  * Stores raw packet data
  * 
- * This unions provides several different views into the raw data 
+ * This union provides several different views into the raw data 
  * depending on the type of packet.
 **/
 
@@ -81,9 +63,9 @@ void write(char* msg) {
 }
 
 void storeGpsPacket() {
-    LOGGER_state.gpsStatus = packetBuf.gpsPacket.payload.status;
-    LOGGER_state.altitude = packetBuf.gpsPacket.payload.altitude;
-    LOGGER_state.rate = packetBuf.gpsPacket.payload.rate;
+    LOGGER_state.gpsStatus = packetBuf.gpsPacket.status;
+    LOGGER_state.altitude = packetBuf.gpsPacket.altitude;
+    LOGGER_state.rate = packetBuf.gpsPacket.rate;
     
     /*
     char* sections[6];
@@ -114,16 +96,16 @@ void storeGpsPacket() {
 }
 
 void storeDataPacket() {
-    LOGGER_state.digital = packetBuf.dataPacket.payload.digital;
-    LOGGER_state.altitude = packetBuf.dataPacket.payload.altitude;
-    LOGGER_state.rate = packetBuf.dataPacket.payload.rate;
+    LOGGER_state.digital = packetBuf.dataPacket.digital;
+    LOGGER_state.altitude = packetBuf.dataPacket.altitude;
+    LOGGER_state.rate = packetBuf.dataPacket.rate;
 
     DB_addDataPacket(
         packetBuf.dataPacket.header.id,
-        packetBuf.dataPacket.payload.digital,
-        packetBuf.dataPacket.payload.altitude,
-        packetBuf.dataPacket.payload.rate,
-        packetBuf.dataPacket.payload.analog
+        packetBuf.dataPacket.digital,
+        packetBuf.dataPacket.altitude,
+        packetBuf.dataPacket.rate,
+        packetBuf.dataPacket.analog
     );
 }
 
