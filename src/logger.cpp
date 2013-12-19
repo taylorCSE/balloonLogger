@@ -10,6 +10,7 @@ using namespace std;
 const char SYNC_BYTE = 0xEE;
 const char DATA_PACKET = 0x2A;
 const char GPS_PACKET = 0x1A;
+const int packetLength = 46;
 
 struct header {
     uint16_t id;
@@ -48,9 +49,6 @@ union PacketBuf {
 
 union PacketBuf lastPacket;
 union PacketBuf packetBuf;
-const int packetLength = 46;
-int packetPos = 0;
-int syncBytesSeen = 0;
 
 LOGGER_State_t LOGGER_state;
 
@@ -110,8 +108,6 @@ void storeDataPacket() {
 }
 
 void storePacket() {
-    packetPos = 0;
-    syncBytesSeen = 0;
     lastPacket = packetBuf;
     LOGGER_state.packetsRead++;
     
@@ -128,6 +124,9 @@ void storePacket() {
 }
 
 int nextPacket() {
+    static int syncBytesSeen = 0;
+    static int packetPos = 0;
+    
     int bytesRead = 0;
     
     if (packetPos == 0 && syncBytesSeen != 2) {
@@ -151,6 +150,8 @@ int nextPacket() {
     }
     
     if (packetPos == packetLength) {
+        packetPos = 0;
+        syncBytesSeen = 0;
         storePacket();
     }
     
