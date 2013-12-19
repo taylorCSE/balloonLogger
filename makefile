@@ -109,6 +109,9 @@ all-before:
 	@echo "BalloonGraph $(MAJOR).$(MINOR).$(BUILD)" > VERSION.txt
 	@echo "Based on commit $(COMMIT)" >> VERSION.txt
 	
+	@echo "Generating documentations"
+	@doxygen doxygen/doxygen.conf > build/doxyout.log
+	
 	@u2d VERSION.txt
 
 dist: dist-custom
