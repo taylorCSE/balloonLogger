@@ -50,7 +50,7 @@ int COMM_GetData(char * buf, int len) {
         return 0;
     }
 
-    int bytesRead = serialPort->Read( buf, 
-                                   len);
+    int bytesRead = serialPort->Read( buf, len);
+    
     return bytesRead;
 }
