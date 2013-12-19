@@ -63,15 +63,10 @@ void MainFrame::CreateGUIControls() {
 }
 
 /**
-    Update
-    
-    This doesn't do anything at the moment, but must exist in order for 
-    this class to properly extend BaseFrame. It still gets called by a
-    timer event.
+    Checks for new serial data and updates the display
 */
 
 void MainFrame::Update() {
-    logPanel->SetPage(wxString("Hello, World!"));
     SetStatusText(wxString(DB_STATUS), 0);
     SetStatusText(wxString("Version:")+wxString(VERSION), 1);
     SetStatusText(wxString(COMM_PORT), 2);
@@ -125,9 +120,7 @@ void MainFrame::OnClose(wxCloseEvent& event) {
 */
 
 void MainFrame::OnTimer(wxTimerEvent& event) {
-    updateTimer->Stop();
     Update();
-    updateTimer->Start(1000);
 }
 
 void MainFrame::NewSettingsFrame( wxCommandEvent& event ) {
