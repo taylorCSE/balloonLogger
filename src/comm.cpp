@@ -51,7 +51,6 @@ int COMM_GetData(char * buf, int len) {
     int bytesRead = serialPort->Read( buf, len);
     
     if (bytesRead < 0) {
-        printf("Attempting to reconnect...\n");
         COMM_open(COMM_PORT);
         wait = time(0) + 10; // Introduce a delay to work around a reconnect bug
     }
