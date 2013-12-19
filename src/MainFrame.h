@@ -36,6 +36,13 @@
 #include "SettingsFrame.h"
 #include "AboutFrame.h"
 
+/** 
+ *  Main application window.
+ *
+ *  This displays basic information about logging activities and provides
+ *  a basic menu to access other parts of the application.
+**/
+
 class MainFrame : public wxFrame
 {
     public:

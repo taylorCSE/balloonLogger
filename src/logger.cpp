@@ -11,10 +11,14 @@ const char SYNC_BYTE = 0xEE;
 const char DATA_PACKET = 0x2A;
 const char GPS_PACKET = 0x1A;
 
+/** Describes the packet header */
+
 struct header {
     uint16_t id;
     uint8_t cmd;
 };
+
+/** Describes the data packet payload */
 
 struct data_payload {
     uint8_t digital;
@@ -23,6 +27,8 @@ struct data_payload {
     uint16_t analog[18];
 };
 
+/** Describes the gps packet payload */
+
 struct gps_payload {
     uint8_t status;
     uint16_t altitude;
@@ -30,15 +36,26 @@ struct gps_payload {
     char gps[36];
 };
 
+/** Describes gps packets */
+
 struct gps_packet {
     struct header header;
     struct gps_payload payload;
 };
 
+/** Describes data packets */
+
 struct data_packet {
     struct header header;
     struct data_payload payload;
 };
+
+/**
+ * Stores raw packet data
+ * 
+ * This unions provides several different views into the raw data 
+ * depending on the type of packet.
+**/
 
 union PacketBuf {
     char raw[64];
