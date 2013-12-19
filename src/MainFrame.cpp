@@ -45,7 +45,7 @@ MainFrame::~MainFrame() {
     
 void MainFrame::CreateGUIControls() {
     // Set window properties and title bar
-    SetTitle(wxT("Main"));
+    SetTitle(wxT("BalloonGraph"));
     SetIcon(wxNullIcon);
     
     // Create main panel and configure sizer
