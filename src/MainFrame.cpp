@@ -68,7 +68,7 @@ void MainFrame::CreateGUIControls() {
 
 void MainFrame::Update() {
     SetStatusText(wxString(DB_STATUS), 0);
-    SetStatusText(wxString("Version:")+wxString(VERSION), 1);
+    SetStatusText(wxString(DB_FLIGHT_ID), 1);
     SetStatusText(wxString(COMM_PORT), 2);
     
     LOGGER_storeAvailablePackets();
