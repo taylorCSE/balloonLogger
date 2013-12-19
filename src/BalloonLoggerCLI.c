@@ -1,6 +1,6 @@
 /**
- * \file BalloonLoggerCLI.cpp
- * \brief Main Application Code
+ * \file BalloonLoggerCLI.c
+ * \brief CLI application entry point
  *
  * This is the entry point for the application.
  */
