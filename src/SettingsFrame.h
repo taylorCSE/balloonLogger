@@ -59,6 +59,7 @@ class SettingsFrame : public wxFrame
         wxTextCtrl* dbName;
         wxTextCtrl* dbUser;
         wxTextCtrl* dbPass;
+        wxTextCtrl* dbFlight;
         wxChoice* commPort;
         
     private:

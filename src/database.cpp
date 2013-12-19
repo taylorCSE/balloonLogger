@@ -20,6 +20,7 @@ string DB_USER = "root";
 string DB_PASS = "";
 string DB_HOST = "127.0.0.1";
 string DB_NAME = "balloontrack";
+string DB_FLIGHT_ID = "MyFlightId";
 
 /// Database status
 string DB_STATUS = "Not initialized";
@@ -194,7 +195,7 @@ void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_
                 "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) "
              "VALUES ('%s', %u, %d, FROM_UNIXTIME(%d), %d, %d, %d, "
                 "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)",
-             (char*)("myFlightId"), deviceId, DB_PACKET_ID, time(0), DI, altitude, rate,
+             DB_FLIGHT_ID.c_str(), deviceId, DB_PACKET_ID, time(0), DI, altitude, rate,
              analog[0],
              analog[1],
              analog[2],

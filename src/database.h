@@ -19,6 +19,7 @@ extern std::string DB_USER;
 extern std::string DB_PASS;
 extern std::string DB_HOST;
 extern std::string DB_NAME;
+extern std::string DB_FLIGHT_ID;
 
 extern std::string DB_STATUS;
 

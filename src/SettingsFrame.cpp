@@ -59,6 +59,7 @@ void SettingsFrame::CreateGUIControls() {
     dbName = new wxTextCtrl(mainPanel,-1,DB_NAME);
     dbUser = new wxTextCtrl(mainPanel,-1,DB_USER);
     dbPass = new wxTextCtrl(mainPanel,-1,DB_PASS);
+    dbFlight = new wxTextCtrl(mainPanel,-1,DB_FLIGHT_ID);
     
     commPort = new wxChoice(mainPanel, -1, wxDefaultPosition, wxDefaultSize, availablePorts.size(), ports);
     
@@ -71,6 +72,8 @@ void SettingsFrame::CreateGUIControls() {
         new wxStaticText(mainPanel,-1,wxT("Database Username"));
     wxStaticText* db_pass_label = 
         new wxStaticText(mainPanel,-1,wxT("Database Password"));
+    wxStaticText* db_flight_label = 
+        new wxStaticText(mainPanel,-1,wxT("FlightID"));
     wxStaticText* comm_port_label = 
         new wxStaticText(mainPanel,-1,wxT("Serial Port"));
     
@@ -89,6 +92,8 @@ void SettingsFrame::CreateGUIControls() {
     mainSizer->Add(dbUser, 0);
     mainSizer->Add(db_pass_label, 0);
     mainSizer->Add(dbPass, 0);
+    mainSizer->Add(db_flight_label, 0);
+    mainSizer->Add(dbFlight, 0);
     mainSizer->Add(comm_port_label, 0);
     mainSizer->Add(commPort, 0);
     mainSizer->Add(buttonSizer, 0);
@@ -122,6 +127,7 @@ void SettingsFrame::OnOk( wxCommandEvent& event ) {
     DB_NAME = dbName->GetValue();
     DB_USER = dbUser->GetValue();
     DB_PASS = dbPass->GetValue();
+    DB_FLIGHT_ID = dbFlight->GetValue();
     
     COMM_open(availablePorts[commPort->GetCurrentSelection()]);
 
