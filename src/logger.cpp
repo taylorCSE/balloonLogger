@@ -49,6 +49,8 @@ union PacketBuf {
 
 LOGGER_State_t LOGGER_state;
 
+/** \todo Remove debug write function */
+
 void write(char* msg) {
     FILE *fp;
 
@@ -56,6 +58,8 @@ void write(char* msg) {
     fprintf(fp,"%s\n",msg);
     fclose(fp);     
 }
+
+/** \todo implement GPS packet parsing and storage */
 
 void storeGpsPacket() {
     LOGGER_state.gpsStatus = packetBuf.gpsPacket.status;

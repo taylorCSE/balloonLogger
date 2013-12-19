@@ -21,6 +21,10 @@ struct LOGGER_State_t {
     int packetsRead;
 };
 
+/**
+ * Stores logger state both for local tracking and external display
+**/
+
 extern LOGGER_State_t LOGGER_state;
 
 int LOGGER_storeAvailablePackets();
