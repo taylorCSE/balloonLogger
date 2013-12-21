@@ -106,6 +106,12 @@ void storeDataPacket() {
     );
 }
 
+/** Stores a complete packet in the appropriate database table(s)
+ *
+ * This also updates the global logger state with the most recent data
+ * for displaying to the user.
+**/
+
 void storePacket() {
     LOGGER_state.packetsRead++;
     
@@ -121,7 +127,17 @@ void storePacket() {
     }
 }
 
-int nextPacket() {
+/** Reads a chunk of data from the serial port
+ * 
+ * If the new chunk completes a packet, the packet is parsed and stored.
+ *
+ * This function is non-blocking. It grabs available serial data and waits
+ * to be called again when more data is available.
+ *
+ * \return int number of bytes read
+**/
+
+int nextChunk() {
     static int syncBytesSeen = 0;
     static int packetPos = 0;
     
@@ -158,10 +174,11 @@ int nextPacket() {
     return bytesRead;
 }
 
+/** Reads available data from the serial port and stores in the database as necessary */
 int LOGGER_storeAvailablePackets() {
     int startingPackets = LOGGER_state.packetsRead;
     
-    while(nextPacket());
+    while(nextChunk());
     
     return LOGGER_state.packetsRead - startingPackets;
 }
