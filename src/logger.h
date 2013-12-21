@@ -19,6 +19,7 @@ struct LOGGER_State_t {
     uint8_t lastCmd;
     int bytesRead;
     int packetsRead;
+    int lastSerialData;
     char position[36];
     char hdg[8];
     char spd[8];

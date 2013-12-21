@@ -69,8 +69,8 @@ void MainFrame::CreateGUIControls() {
 void MainFrame::Update() {
     SetStatusText(wxString(DB_STATUS), 0);
     SetStatusText(wxString(DB_FLIGHT_ID), 1);
-    SetStatusText(wxString(COMM_PORT), 2);
-    
+    SetStatusText(wxString(COMM_PORT) + " (idle " + wxString::Format(wxT("%d"),(int)(time(0) - LOGGER_state.lastSerialData)) + "s)" , 2);
+
     LOGGER_storeAvailablePackets();
     
     logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),LOGGER_state.bytesRead) + " " + 

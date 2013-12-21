@@ -171,6 +171,10 @@ int nextChunk() {
     
     LOGGER_state.bytesRead += bytesRead;
     
+    if (bytesRead > 0) {
+        LOGGER_state.lastSerialData = time(0);
+    }
+    
     return bytesRead;
 }
 
