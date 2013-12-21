@@ -241,5 +241,11 @@ void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_
              analog[17]
             );
             
+    DB_query((char*)"INSERT INTO dip "
+                "(FlightId, DeviceId, PacketId, Timestamp, DI, Altitude, Rate) " 
+             "VALUES ('%s', %u, %d, FROM_UNIXTIME(%d), %d, %d, %d)",
+             DB_FLIGHT_ID.c_str(), deviceId, DB_PACKET_ID, time(0), DI, altitude, rate
+            );
+            
     DB_PACKET_ID++;
 }
