@@ -73,8 +73,8 @@ void MainFrame::Update() {
     
     LOGGER_storeAvailablePackets();
     
-    logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),LOGGER_state.bytesRead) + "<br>" + 
-        "Packets read: " + wxString::Format(wxT("%i"),LOGGER_state.packetsRead) + "<br>" +
+    logPanel->SetPage("Bytes read: " + wxString::Format(wxT("%i"),LOGGER_state.bytesRead) + " " + 
+        "(" + wxString::Format(wxT("%i"),LOGGER_state.packetsRead) + " packets)<br>" +
         "Database errors: " + wxString::Format(wxT("%i"),DB_ERRORS) + "<br>" +
         "Last packet type: " + wxString::Format(wxT("%x"),LOGGER_state.lastCmd) + "<br>" +
         "Last device ID: " + wxString::Format(wxT("%u"),LOGGER_state.lastId) + "<br>" +
