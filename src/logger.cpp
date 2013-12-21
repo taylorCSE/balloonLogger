@@ -66,32 +66,38 @@ void storeGpsPacket() {
     LOGGER_state.altitude = packetBuf.gpsPacket.altitude;
     LOGGER_state.rate = packetBuf.gpsPacket.rate;
     
-    /*
-    char* sections[6];
-    int currentSection = 1;
+    char* parts[6];
     
-    sections[0] = packetBuf.gpsPacket.payload.gps;
+    parts[0] = packetBuf.gpsPacket.gps;
     
-    for (char* pos = packetBuf.gpsPacket.payload.gps; pos <= packetBuf.gpsPacket.payload.gps + 36; pos++) {
-        if (*pos == ',') {
-            *pos = '\0';
-            pos++;
-            sections[currentSection] = pos;
-            currentSection++;
+    int part = 1;
+    
+    for (int i = 0; i < 36; i++) {
+        if (packetBuf.gpsPacket.gps[i] == ',') {
+            packetBuf.gpsPacket.gps[i] = 0x00;
+            parts[part] = packetBuf.gpsPacket.gps + i + 1;
+            part++;
         }
     }
     
-    DB_addGpsPacket(
-        packetBuf.gpsPacket.header.id,
-        packetBuf.gpsPacket.payload.status,
-        sections[0],
-        sections[1],
-        sections[2],
-        sections[3],
-        sections[4],
-        sections[5]
-    );
-    */
+    if (part != 6) {
+        printf("Invalid GPS string");
+    } else {
+        // Properlu terminate last entry
+        for(int i = 0; i < 7; i++) {
+            if (parts[5][i] < '.' || parts[5][i] > '9') {
+                parts[5][i] = 0x00;
+            }
+        }
+        
+        DB_addGpsPacket(
+            packetBuf.gpsPacket.header.id,
+            packetBuf.gpsPacket.status,
+            packetBuf.gpsPacket.altitude,
+            packetBuf.gpsPacket.rate,
+            parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]
+        );
+    }
 }
 
 void storeDataPacket() {

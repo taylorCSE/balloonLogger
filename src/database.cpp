@@ -178,13 +178,16 @@ bool DB_isQueryReady() {
     return true;
 }
 
-void DB_addGpsPacket(uint16_t deviceId, int status, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
+void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint8_t altitude, uint8_t rate, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
     DB_query((char*)"INSERT INTO gps "
-                "(FlightId, DeviceId, PacketId, TimesStamp, Status, " 
+                "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
-             "VALUES (%s, %d, %d, %s, %s, %s, %s)",
-             (char*)("myFlightId"), deviceId, status, lat, latRef, lon, lonRef,
-                spd, hdg);
+             "VALUES ('%s', %d, %d, FROM_UNIXTIME(%d), %d, %d, %d,"
+                "'%s', '%s', '%s', '%s', '%s', '%s')",
+             DB_FLIGHT_ID.c_str(), deviceId, DB_PACKET_ID, time(0), status, altitude, rate, 
+                lat, latRef, lon, lonRef, spd, hdg);
+    
+    DB_PACKET_ID++;
 }
 
 void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
