@@ -49,8 +49,6 @@ union PacketBuf {
 
 LOGGER_State_t LOGGER_state;
 
-/** \todo implement GPS packet parsing and storage */
-
 void storeGpsPacket() {
     LOGGER_state.gpsStatus = packetBuf.gpsPacket.status;
     LOGGER_state.altitude = packetBuf.gpsPacket.altitude;
