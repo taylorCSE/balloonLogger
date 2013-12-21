@@ -83,6 +83,8 @@ void storeGpsPacket() {
     if (part != 6) {
         printf("Invalid GPS string");
     } else {
+        sprintf(LOGGER_state.gps, "%s %s %s %s", parts[0], parts[1], parts[2], parts[3]);
+        
         // Properlu terminate last entry
         for(int i = 0; i < 7; i++) {
             if (parts[5][i] < '.' || parts[5][i] > '9') {

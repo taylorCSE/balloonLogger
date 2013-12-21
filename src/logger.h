@@ -19,6 +19,7 @@ struct LOGGER_State_t {
     uint8_t lastCmd;
     int bytesRead;
     int packetsRead;
+    char gps[36];
 };
 
 /**
