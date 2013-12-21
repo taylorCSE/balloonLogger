@@ -78,7 +78,9 @@ void MainFrame::Update() {
         "Last packet type: " + wxString::Format(wxT("%x"),LOGGER_state.lastCmd) + "<br>" +
         "Last device ID: " + wxString::Format(wxT("%u"),LOGGER_state.lastId) + "<br>" +
         "GPS Status: " + wxString::Format(wxT("%d"),LOGGER_state.gpsStatus) + "<br>" +
-        "Last position: " + wxString::Format(wxT("%s"),LOGGER_state.position) + "<br>" +
+        "Position: " + wxString::Format(wxT("%s"),LOGGER_state.position) + "<br>" +
+        "Speed: " + wxString::Format(wxT("%s"),LOGGER_state.spd) + "<br>" +
+        "Heading: " + wxString::Format(wxT("%s"),LOGGER_state.hdg) + "<br>" +
         "Altitude: " + wxString::Format(wxT("%d"),LOGGER_state.altitude) + "<br>" +
         "Rate: " + wxString::Format(wxT("%d"),LOGGER_state.rate) + "<br>"
     );

@@ -20,6 +20,8 @@ struct LOGGER_State_t {
     int bytesRead;
     int packetsRead;
     char position[36];
+    char hdg[8];
+    char spd[8];
 };
 
 /**
