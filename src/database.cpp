@@ -30,6 +30,26 @@ char DB_buf[16384];
 
 int DB_PACKET_ID = 0;
 
+void DB_updateMaxId() {
+    DB_query((char*)"SELECT max(PacketId) from gps where FlightId='%s'", DB_FLIGHT_ID.c_str());
+    if (DB_result) {
+        int tmp = atoi(mysql_fetch_row(DB_result)[0]) + 1;
+        
+        if (tmp > DB_PACKET_ID) {
+            DB_PACKET_ID = tmp;
+        }
+    }
+
+    DB_query((char*)"SELECT max(PacketId) from aip where FlightId='%s'", DB_FLIGHT_ID.c_str());
+    if (DB_result) {
+        int tmp = atoi(mysql_fetch_row(DB_result)[0]) + 1;
+        
+        if (tmp > DB_PACKET_ID) {
+            DB_PACKET_ID = tmp;
+        }
+    }
+}
+
 /**
     Connect to the database
 */
@@ -179,6 +199,7 @@ bool DB_isQueryReady() {
 }
 
 void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint8_t altitude, uint8_t rate, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
+    DB_updateMaxId();
     DB_query((char*)"INSERT INTO gps "
                 "(FlightId, DeviceId, PacketId, Timestamp, Status, " 
                 "Altitude, Rate, Lat, LatRef, Lon, LonRef, Spd, Hdg)"
@@ -193,6 +214,7 @@ void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint8_t altitude, uint8_
 void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
     fprintf(DB_log, "deviceId: %u\n",deviceId);
 
+    DB_updateMaxId();
     DB_query((char*)"INSERT INTO aip "
                 "(FlightId, DeviceId, PacketId, TimesStamp, DI, Altitude, Rate," 
                 "A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) "
