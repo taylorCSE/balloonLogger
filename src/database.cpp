@@ -8,6 +8,8 @@
 
 #include "database.h"
 
+//#define DB_LOG_ALL // Show all queries in database log
+
 using namespace std;
 
 /// Globals to maintain database connection
@@ -59,7 +61,7 @@ void DB_updateMaxId() {
 
 void DB_connect() {
     DB_log = fopen("database.log","w");
-
+    
     DB_conn = mysql_init(NULL);
     
     if (DB_conn == NULL) {
@@ -143,20 +145,25 @@ void DB_query(char* item ...) {
     }
     
     va_end(v);
+    #ifdef DB_LOG_ALL
     fprintf(DB_log, "Executing Query: %s\n",query);
+    #endif
     DB_QUERIES++;
 
     /// Execute the query
     
     if(!mysql_query(DB_conn, query)) {
         DB_result = mysql_store_result(DB_conn);
+        #ifdef DB_LOG_ALL
         if (DB_result) {
             fprintf(DB_log, "Rows Returned: %d\n",(int)mysql_num_rows(DB_result));
         } else {
             fprintf(DB_log, "Query executed successfully\n");            
         }
+        #endif
     } else {
-        fprintf(DB_log, "Error querying database.\n");
+        printf("Error querying database.\n");
+        fprintf(DB_log, "Error querying database.\n\n%s\n\n",query);
         DB_ERRORS++;
         DB_result = 0x00;
     }
@@ -217,8 +224,6 @@ void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint8_t altitude, uint8_
 }
 
 void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_t analog[18]) {
-    fprintf(DB_log, "deviceId: %u\n",deviceId);
-
     DB_updateMaxId();
     DB_query((char*)"INSERT INTO aip "
                 "(FlightId, DeviceId, PacketId, TimesStamp, DI, Altitude, Rate," 
