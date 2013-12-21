@@ -22,6 +22,8 @@ extern std::string DB_NAME;
 extern std::string DB_FLIGHT_ID;
 
 extern std::string DB_STATUS;
+extern int DB_QUERIES;
+extern int DB_ERRORS;
 
 void DB_connect();
 void DB_query(char * item ...);

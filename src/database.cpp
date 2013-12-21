@@ -22,6 +22,9 @@ string DB_HOST = "127.0.0.1";
 string DB_NAME = "balloontrack";
 string DB_FLIGHT_ID = "MyFlightId";
 
+int DB_QUERIES = 0;
+int DB_ERRORS = 0;
+
 /// Database status
 string DB_STATUS = "Not initialized";
 
@@ -141,6 +144,7 @@ void DB_query(char* item ...) {
     
     va_end(v);
     fprintf(DB_log, "Executing Query: %s\n",query);
+    DB_QUERIES++;
 
     /// Execute the query
     
@@ -153,6 +157,7 @@ void DB_query(char* item ...) {
         }
     } else {
         fprintf(DB_log, "Error querying database.\n");
+        DB_ERRORS++;
         DB_result = 0x00;
     }
 }
