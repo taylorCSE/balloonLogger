@@ -13,8 +13,7 @@ const char GPS_PACKET = 0x1A;
 const int packetLength = 46;
 
 struct header {
-    uint8_t id1;
-    uint8_t id2;
+    uint16_t id;
     uint8_t cmd;
 };
 
@@ -52,9 +51,10 @@ LOGGER_State_t LOGGER_state;
 
 /** \todo Correct byte order for word attributes */
 uint16_t flipBytes(uint16_t in) {
+    uint16_t hibyte = (in & 0xff00) >> 8;
+    uint16_t lobyte = (in & 0xff);
     
-    
-    return in;
+    return lobyte << 8 | hibyte;
 }
 
 void storeGpsPacket() {
@@ -91,7 +91,7 @@ void storeGpsPacket() {
         sprintf(LOGGER_state.hdg, "%s", parts[5]);
         
         DB_addGpsPacket(
-            packetBuf.gpsPacket.header.id1 * 256 + packetBuf.gpsPacket.header.id2,
+            flipBytes(packetBuf.gpsPacket.header.id),
             packetBuf.gpsPacket.status,
             packetBuf.gpsPacket.altitude,
             packetBuf.gpsPacket.rate,
@@ -106,7 +106,7 @@ void storeDataPacket() {
     LOGGER_state.rate = packetBuf.dataPacket.rate;
 
     DB_addDataPacket(
-        packetBuf.dataPacket.header.id1 * 256 + packetBuf.dataPacket.header.id2,
+        flipBytes(packetBuf.dataPacket.header.id),
         packetBuf.dataPacket.digital,
         packetBuf.dataPacket.altitude,
         packetBuf.dataPacket.rate,
@@ -123,7 +123,7 @@ void storeDataPacket() {
 void storePacket() {
     LOGGER_state.packetsRead++;
     
-    LOGGER_state.lastId = packetBuf.header.id1 * 256 + packetBuf.header.id2;
+    LOGGER_state.lastId = flipBytes(packetBuf.header.id);
     LOGGER_state.lastCmd = packetBuf.header.cmd;
     
     if (packetBuf.header.cmd == GPS_PACKET) {
