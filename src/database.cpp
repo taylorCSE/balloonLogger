@@ -120,8 +120,10 @@ void DB_query(char* item ...) {
     
     /// Connect to the DB if necessary
     
-    if(!DB_conn) DB_connect();
-    if(!DB_conn) return;
+    if(!DB_conn) {
+        DB_ERRORS++;
+        return;
+    }
     
     /// Assemble the query
 
