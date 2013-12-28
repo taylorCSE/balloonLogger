@@ -210,7 +210,7 @@ bool DB_isQueryReady() {
     return true;
 }
 
-void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint8_t altitude, uint8_t rate, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
+void DB_addGpsPacket(uint16_t deviceId, uint8_t status, uint16_t altitude, uint16_t rate, char* lat, char* latRef, char* lon, char* lonRef, char* spd, char* hdg) {
     DB_updateMaxId();
     DB_query((char*)"INSERT INTO gps "
                 "(FlightId, DeviceId, PacketId, Timestamp, Status, " 

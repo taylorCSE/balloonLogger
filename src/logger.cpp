@@ -147,7 +147,7 @@ void storePacket() {
     }
     
     if (packetBuf.header.cmd == DATA_PACKET) {
-        //storeDataPacket();
+        storeDataPacket();
     }
     
     for (int i = 0; i < 64; i++) {

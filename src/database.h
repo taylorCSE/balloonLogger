@@ -30,7 +30,7 @@ void DB_query(char * item ...);
 char* DB_resultAsText();
 bool DB_isQueryReady();
 void DB_addGpsPacket(uint16_t deviceId, uint8_t status, 
-    uint8_t altitude, uint8_t rate, char* lat, char* latRef,
+    uint16_t altitude, uint16_t rate, char* lat, char* latRef,
     char* lon, char* lonRef, char* spd, char* hdg);
 void DB_addDataPacket(uint16_t deviceId, int DI, int altitude, int rate, uint16_t analog[18]);
 
