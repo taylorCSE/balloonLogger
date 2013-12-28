@@ -60,7 +60,6 @@ uint16_t flipBytes(uint16_t in) {
 }
 
 void storeGpsPacket() {
-    packetBuf.gpsPacket.header.id = flipBytes(packetBuf.gpsPacket.header.id);
     packetBuf.gpsPacket.altitude = flipBytes(packetBuf.gpsPacket.altitude);
     packetBuf.gpsPacket.rate = flipBytes(packetBuf.gpsPacket.rate);
     
@@ -109,7 +108,6 @@ void storeGpsPacket() {
 void storeDataPacket() {
     packetBuf.dataPacket.altitude = flipBytes(packetBuf.dataPacket.altitude);
     packetBuf.dataPacket.rate = flipBytes(packetBuf.dataPacket.rate);
-    packetBuf.dataPacket.header.id = flipBytes(packetBuf.dataPacket.header.id);
     
     for(int i = 0; i < 18; i++) {
         packetBuf.dataPacket.analog[i] = flipBytes(packetBuf.dataPacket.analog[i]);
@@ -137,7 +135,9 @@ void storeDataPacket() {
 void storePacket() {
     LOGGER_state.packetsRead++;
     
-    LOGGER_state.lastId = flipBytes(packetBuf.header.id);
+    packetBuf.header.id = flipBytes(packetBuf.header.id);
+    
+    LOGGER_state.lastId = packetBuf.header.id;
     LOGGER_state.lastCmd = packetBuf.header.cmd;
     
     if (packetBuf.header.cmd == GPS_PACKET) {
