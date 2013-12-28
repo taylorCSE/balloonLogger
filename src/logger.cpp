@@ -70,6 +70,7 @@ void storeGpsPacket() {
     LOGGER_state.rate = packetBuf.gpsPacket.rate;
     
     char* parts[6];
+    char *lat, *lon;
     
     parts[0] = packetBuf.gpsPacket.gps;
     
@@ -93,7 +94,10 @@ void storeGpsPacket() {
             }
         }
         
-        sprintf(LOGGER_state.position, "%s %s %s %s", parts[0], parts[1], parts[2], parts[3]);
+        lat = parts[0];
+        lon = parts[2];
+        
+        sprintf(LOGGER_state.position, "%s %s %s %s", lat, parts[1], lon, parts[3]);
         sprintf(LOGGER_state.spd, "%s", parts[4]);
         sprintf(LOGGER_state.hdg, "%s", parts[5]);
         
@@ -102,7 +106,7 @@ void storeGpsPacket() {
             packetBuf.gpsPacket.status,
             packetBuf.gpsPacket.altitude,
             packetBuf.gpsPacket.rate,
-            parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]
+            lat, parts[1], lon, parts[3], parts[4], parts[5]
         );
     }
 }
