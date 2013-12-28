@@ -58,9 +58,13 @@ uint16_t flipBytes(uint16_t in) {
 }
 
 void storeGpsPacket() {
+    packetBuf.gpsPacket.header.id = flipBytes(packetBuf.gpsPacket.header.id);
+    packetBuf.gpsPacket.altitude = flipBytes(packetBuf.gpsPacket.altitude);
+    packetBuf.gpsPacket.rate = flipBytes(packetBuf.gpsPacket.rate);
+    
     LOGGER_state.gpsStatus = packetBuf.gpsPacket.status;
-    LOGGER_state.altitude = flipBytes(packetBuf.gpsPacket.altitude);
-    LOGGER_state.rate = flipBytes(packetBuf.gpsPacket.rate);
+    LOGGER_state.altitude = packetBuf.gpsPacket.altitude;
+    LOGGER_state.rate = packetBuf.gpsPacket.rate;
     
     char* parts[6];
     
@@ -91,29 +95,33 @@ void storeGpsPacket() {
         sprintf(LOGGER_state.hdg, "%s", parts[5]);
         
         DB_addGpsPacket(
-            flipBytes(packetBuf.gpsPacket.header.id),
+            packetBuf.gpsPacket.header.id,
             packetBuf.gpsPacket.status,
-            flipBytes(packetBuf.gpsPacket.altitude),
-            flipBytes(packetBuf.gpsPacket.rate),
+            packetBuf.gpsPacket.altitude,
+            packetBuf.gpsPacket.rate,
             parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]
         );
     }
 }
 
 void storeDataPacket() {
-    LOGGER_state.digital = packetBuf.dataPacket.digital;
-    LOGGER_state.altitude = flipBytes(packetBuf.dataPacket.altitude);
-    LOGGER_state.rate = flipBytes(packetBuf.dataPacket.rate);
+    packetBuf.dataPacket.altitude = flipBytes(packetBuf.dataPacket.altitude);
+    packetBuf.dataPacket.rate = flipBytes(packetBuf.dataPacket.rate);
+    packetBuf.dataPacket.header.id = flipBytes(packetBuf.dataPacket.header.id);
     
     for(int i = 0; i < 18; i++) {
         packetBuf.dataPacket.analog[i] = flipBytes(packetBuf.dataPacket.analog[i]);
     }
 
+    LOGGER_state.digital = packetBuf.dataPacket.digital;
+    LOGGER_state.altitude = packetBuf.dataPacket.altitude;
+    LOGGER_state.rate = packetBuf.dataPacket.rate;
+    
     DB_addDataPacket(
-        flipBytes(packetBuf.dataPacket.header.id),
+        packetBuf.dataPacket.header.id,
         packetBuf.dataPacket.digital,
-        flipBytes(packetBuf.dataPacket.altitude),
-        flipBytes(packetBuf.dataPacket.rate),
+        packetBuf.dataPacket.altitude,
+        packetBuf.dataPacket.rate,
         packetBuf.dataPacket.analog
     );
 }
