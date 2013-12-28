@@ -61,6 +61,33 @@ uint16_t flipBytes(uint16_t in) {
     return lobyte << 8 | hibyte;
 }
 
+/**
+ * Convert NMEA GPS value to degrees.minutes
+ * 
+ * NMEA format: dddmm.mmmmm or ddmm.mmmmm
+ *
+ * Conversion: dd + (mm.mmmmm/60)
+**/
+float convertNMEA(char* nmea) {
+    char *startMinutes = strchr(nmea, '.');
+    int hours;
+    float minutes;
+    
+    if (!startMinutes) {
+        return 0;
+    } else {
+        startMinutes -= 2;
+        
+        sscanf(startMinutes, "%f", &minutes);
+        
+        *startMinutes = 0x00;
+        
+        sscanf(nmea, "%d", &hours);
+        
+        return hours + (minutes/60);
+    }
+}
+
 void storeGpsPacket() {
     packetBuf.gpsPacket.altitude = flipBytes(packetBuf.gpsPacket.altitude);
     packetBuf.gpsPacket.rate = flipBytes(packetBuf.gpsPacket.rate);
@@ -70,7 +97,7 @@ void storeGpsPacket() {
     LOGGER_state.rate = packetBuf.gpsPacket.rate;
     
     char* parts[6];
-    char *lat, *lon;
+    float lat, lon;
     
     parts[0] = packetBuf.gpsPacket.gps;
     
@@ -94,10 +121,10 @@ void storeGpsPacket() {
             }
         }
         
-        lat = parts[0];
-        lon = parts[2];
+        lat = convertNMEA(parts[0]);
+        lon = convertNMEA(parts[2]);
         
-        sprintf(LOGGER_state.position, "%s %s %s %s", lat, parts[1], lon, parts[3]);
+        sprintf(LOGGER_state.position, "%f %s %f %s", lat, parts[1], lon, parts[3]);
         sprintf(LOGGER_state.spd, "%s", parts[4]);
         sprintf(LOGGER_state.hdg, "%s", parts[5]);
         
