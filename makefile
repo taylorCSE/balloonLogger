@@ -118,6 +118,8 @@ dist: dist-custom
 	@echo -e "$(G)Building distribution $(DIST)/balloongraph-$(MAJOR).$(MINOR).$(BUILD).zip$(W)..."
 	$(ZIP) $(DIST)/balloonlogger-$(MAJOR).$(MINOR).$(BUILD).zip \
 			$(BIN) \
+			libgcc_s_dw2-1.dll \
+			libstdc++-6.dll \
 			ctb-0.16.dll \
 			libmysql.dll \
 			README.txt \
