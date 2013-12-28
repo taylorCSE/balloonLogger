@@ -18,7 +18,8 @@ struct header {
 };
 
 struct gps_packet {
-    struct header header;
+    uint16_t id;
+    uint8_t cmd;
     uint8_t status;
     uint16_t altitude;
     uint16_t rate;
@@ -26,7 +27,8 @@ struct gps_packet {
 };
 
 struct data_packet {
-    struct header header;
+    uint16_t id;
+    uint8_t cmd;
     uint8_t digital;
     uint16_t altitude;
     uint16_t rate;
@@ -96,7 +98,7 @@ void storeGpsPacket() {
         sprintf(LOGGER_state.hdg, "%s", parts[5]);
         
         DB_addGpsPacket(
-            packetBuf.gpsPacket.header.id,
+            packetBuf.gpsPacket.id,
             packetBuf.gpsPacket.status,
             packetBuf.gpsPacket.altitude,
             packetBuf.gpsPacket.rate,
@@ -118,7 +120,7 @@ void storeDataPacket() {
     LOGGER_state.rate = packetBuf.dataPacket.rate;
     
     DB_addDataPacket(
-        packetBuf.dataPacket.header.id,
+        packetBuf.dataPacket.id,
         packetBuf.dataPacket.digital,
         packetBuf.dataPacket.altitude,
         packetBuf.dataPacket.rate,
@@ -145,7 +147,11 @@ void storePacket() {
     }
     
     if (packetBuf.header.cmd == DATA_PACKET) {
-        storeDataPacket();
+        //storeDataPacket();
+    }
+    
+    for (int i = 0; i < 64; i++) {
+        packetBuf.raw[i] = 0x00;
     }
 }
 
