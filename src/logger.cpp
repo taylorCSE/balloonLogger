@@ -49,7 +49,9 @@ union PacketBuf {
 
 LOGGER_State_t LOGGER_state;
 
-/** \todo Correct byte order for word attributes */
+/**
+ * Reverses byte order in a word
+**/
 uint16_t flipBytes(uint16_t in) {
     uint16_t hibyte = (in & 0xff00) >> 8;
     uint16_t lobyte = (in & 0xff);
