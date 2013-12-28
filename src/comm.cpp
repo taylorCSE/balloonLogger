@@ -14,7 +14,11 @@ string COMM_PROTO = "8N1";
 
 ctb::SerialPort* serialPort = 0;
 
-/** Fills the passed string vector with comm ports available for use */
+/** 
+ * Fills the passed string vector with comm ports available for use 
+ * 
+ * \todo This seems to have issues with high numbered comm ports e.g. com11
+**/
 
 void COMM_GetAvailablePorts(std::vector<std::string>& portsStrVec) {
     ctb::GetAvailablePorts(portsStrVec);
