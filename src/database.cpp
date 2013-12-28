@@ -35,6 +35,9 @@ char DB_buf[16384];
 
 int DB_PACKET_ID = 0;
 
+/**
+ * \todo This should be done in a single transaction to avoid concurrency issues
+**/
 void DB_updateMaxId() {
     DB_query((char*)"SELECT max(PacketId) from gps where FlightId='%s'", DB_FLIGHT_ID.c_str());
     if (DB_result) {
