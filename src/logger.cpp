@@ -50,6 +50,13 @@ union PacketBuf {
 
 LOGGER_State_t LOGGER_state;
 
+/** \todo Correct byte order for word attributes */
+uint16_t flipBytes(uint16_t in) {
+    
+    
+    return in;
+}
+
 void storeGpsPacket() {
     LOGGER_state.gpsStatus = packetBuf.gpsPacket.status;
     LOGGER_state.altitude = packetBuf.gpsPacket.altitude;
