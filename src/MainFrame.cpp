@@ -30,6 +30,8 @@ MainFrame::MainFrame()
     updateTimer->Start(1000);
               
     SetTransparent(245);
+              
+    DB_connect();
 }
 
 /** 
